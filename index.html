@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Teamily">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Helvetica,Arial' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
 <title>Teamily · AI Agent Team</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,6 +189,31 @@
   .artcard span{font-size:11.2px;color:var(--dimmer);font-weight:600}
   .artcard:active{transform:scale(.98)}
 
+  /* ---------- iOS top navigation bar ---------- */
+  header.top{transition:padding .28s ease}
+  header.top.compact{align-items:center;padding:2px 4px 6px}
+  header.top.compact .title{font-size:17px;letter-spacing:-.4px}
+  header.top.compact .sub{display:none}
+  header.top.compact .icon-btn{width:34px;height:34px;border-radius:11px;font-size:15px}
+
+  .topnav{position:relative;z-index:26;margin:0 -16px 10px;padding:2px 0 2px}
+  .topnav::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(238,242,251,.92),rgba(238,242,251,.55) 70%,rgba(238,242,251,0));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);pointer-events:none;opacity:0;transition:opacity .3s}
+  html[data-theme="dark"] .topnav::before{background:linear-gradient(180deg,rgba(8,11,20,.92),rgba(8,11,20,.55) 70%,rgba(8,11,20,0))}
+  .topnav.stuck::before{opacity:1}
+  .segnav{position:relative;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:6px 16px;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+  .segnav::-webkit-scrollbar{display:none}
+  .segnav button{border:1px solid var(--line);background:var(--card-2);color:var(--dim);font:inherit;font-weight:700;
+    font-size:12.6px;letter-spacing:-.2px;padding:11px 16px;border-radius:16px;white-space:nowrap;cursor:pointer;flex:0 0 auto;
+    display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(23,37,84,.06);
+    transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .24s,color .2s,background .24s,border-color .24s}
+  .segnav button .g{font-size:13px;line-height:1;opacity:.85}
+  .segnav button:active{transform:scale(.94)}
+  .segnav button.on{color:#fff;background:var(--grad);border-color:transparent;
+    box-shadow:0 10px 22px rgba(94,110,255,.34),inset 0 1px 0 rgba(255,255,255,.38)}
+  .segnav button.on .g{opacity:1}
+  .segnav button.live::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px rgba(46,196,160,.9);margin-left:1px}
+
   /* ---------- dock ---------- */
   .dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;
     width:min(452px,calc(100% - 32px));display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-radius:26px;
@@ -309,6 +336,18 @@
       <button class="icon-btn" data-act="settings" title="Settings">⚙</button>
     </div>
   </header>
+
+  <div class="topnav" id="topnav">
+    <div class="segnav" id="segNav">
+      <button data-act="nav" data-view="chats" class="on"><span class="g">◌</span>Chats</button>
+      <button data-act="nav" data-view="agents"><span class="g">◉</span>Agents</button>
+      <button data-act="nav" data-view="teams"><span class="g">◎</span>Teams</button>
+      <button data-act="nav" data-view="automations"><span class="g">⚡</span>Automations</button>
+      <button data-act="nav" data-view="discover"><span class="g">◈</span>Discover</button>
+      <button data-act="nav" data-view="memory"><span class="g">▤</span>Memory</button>
+      <button data-act="nav" data-view="artifacts"><span class="g">▣</span>Artifacts</button>
+    </div>
+  </div>
 
   <main class="scroll" id="screen"></main>
 </div>
@@ -509,6 +548,51 @@ function toast(msg){
   toastTimer = setTimeout(() => t.classList.remove('show'), 1900);
 }
 
+/* ================= real AI (bring your own key) ================= */
+const AI_PRESETS = {
+  openai:{label:'OpenAI', url:'https://api.openai.com/v1/chat/completions', model:'gpt-4o-mini'},
+  anthropic:{label:'Anthropic', url:'https://api.anthropic.com/v1/messages', model:'claude-sonnet-4-5'},
+  openrouter:{label:'OpenRouter', url:'https://openrouter.ai/api/v1/chat/completions', model:'openai/gpt-4o-mini'},
+  groq:{label:'Groq', url:'https://api.groq.com/openai/v1/chat/completions', model:'llama-3.3-70b-versatile'}
+};
+function aiCfg(){
+  if(!db.ai) db.ai = {provider:'openai', key:'', model:''};
+  return db.ai;
+}
+function aiReady(){
+  const a = aiCfg();
+  return !!(a.key && a.key.replace(/\s/g,'').length > 15);
+}
+function aiSystem(agent){
+  const who = agent ? (agent.name + ' — ' + (agent.role || 'specialist') + '. ' + (agent.desc || '')) : 'the Teamily agent team';
+  return 'You are ' + who + ' inside Teamily, a premium AI agent team app. Reply in the user language. Be concrete and practical, max 120 words. Use short lines, no markdown headings.';
+}
+async function aiReply(system, msgs){
+  const a = aiCfg();
+  const preset = AI_PRESETS[a.provider] || AI_PRESETS.openai;
+  const model = (a.model || preset.model).trim();
+  const history = msgs.slice(-12).map(m => ({role: m.from === 'me' ? 'user' : 'assistant', content: m.text}));
+  let res;
+  if(a.provider === 'anthropic'){
+    res = await fetch(preset.url, {
+      method:'POST',
+      headers:{'content-type':'application/json','x-api-key':a.key.trim(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body: JSON.stringify({model:model, max_tokens:900, system:system, messages:history})
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    return (j.content || []).map(x => x.text || '').join('\n').trim();
+  }
+  res = await fetch(preset.url, {
+    method:'POST',
+    headers:{'content-type':'application/json','authorization':'Bearer ' + a.key.trim()},
+    body: JSON.stringify({model:model, temperature:0.7, messages:[{role:'system', content:system}].concat(history)})
+  });
+  if(!res.ok) throw new Error('HTTP ' + res.status);
+  const j = await res.json();
+  return ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '').trim();
+}
+
 /* ================= replies ================= */
 const RULES = [
   {re:/visa|passport|immigration|embassy|schengen|saudi|canada|australia|bangladesh/i, reply:
@@ -544,6 +628,8 @@ function replyFor(agentId, text){
 const TITLES = {
   chats:{t:'Chats', s:'Live agent conversations'},
   agents:{t:'Agents', s:'Your AI team'},
+  teams:{t:'Agent Teams', s:'Agents working together'},
+  automations:{t:'Automations', s:'Running on your behalf'},
   discover:{t:'Discover', s:'Add new specialists'},
   memory:{t:'Memory', s:'What your team knows'},
   artifacts:{t:'Artifacts', s:'Saved outputs'}
@@ -563,7 +649,18 @@ function updateChrome(){
   document.getElementById('pageSub').textContent = uiView() === 'chats' && unread
     ? unread + ' unread message' + (unread > 1 ? 's' : '')
     : info.s;
-  document.querySelectorAll('.dock button').forEach(b => b.classList.toggle('on', b.dataset.view === uiView()));
+  const v = uiView();
+  document.querySelectorAll('.dock button').forEach(b => b.classList.toggle('on', b.dataset.view === v));
+  const navOn = document.querySelector('.segnav button[data-view="' + v + '"]');
+  document.querySelectorAll('.segnav button').forEach(b => b.classList.toggle('on', b === navOn));
+  if(navOn){
+    navOn.classList.toggle('live', v === 'automations' && db.automations.some(a => a.on));
+    const bar = document.getElementById('segNav');
+    if(bar){
+      const target = navOn.offsetLeft - (bar.clientWidth - navOn.offsetWidth) / 2;
+      bar.scrollTo({left:Math.max(0, target), behavior:'smooth'});
+    }
+  }
   const dockChats = document.querySelector('.dock button[data-view="chats"]');
   let dot = dockChats.querySelector('.dot');
   if(unread && !dot){
@@ -677,12 +774,10 @@ function autosList(){
 }
 
 function renderAgents(){
-  const tab = db.ui.atab || 'agents';
   const q = (db.ui.q || '').toLowerCase();
-  let body = '';
-  if(tab === 'agents'){
-    const list = db.agents.filter(a => !q || (a.name + ' ' + a.desc).toLowerCase().indexOf(q) >= 0);
-    body = '<div class="stats">' +
+  const list = db.agents.filter(a => !q || (a.name + ' ' + a.desc).toLowerCase().indexOf(q) >= 0);
+  const body =
+      '<div class="stats">' +
         '<div class="stat card"><b>' + db.agents.length + '</b><span>Agents</span></div>' +
         '<div class="stat card"><b>' + db.teams.length + '</b><span>Teams</span></div>' +
         '<div class="stat card"><b>' + db.automations.filter(x => x.on).length + '</b><span>Live</span></div>' +
@@ -691,18 +786,29 @@ function renderAgents(){
       '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Your agents</span>' +
         '<button class="btn sm" data-act="newAgent">＋ New agent</button></div>' +
       '<div id="list-agents">' + (list.length ? list.map(agentCard).join('') : '<div class="empty">No agents match that search.</div>') + '</div>';
-  } else if(tab === 'teams'){
-    body = '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Agent teams</span>' +
-      '<button class="btn sm pink" data-act="newTeam">＋ New team</button></div><div id="list-teams">' + teamsList() + '</div>';
-  } else {
-    body = '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Automations</span>' +
-      '<button class="btn sm mint" data-act="newAuto">＋ New</button></div><div id="list-autos">' + autosList() + '</div>';
-  }
-  return '<div class="tabs card">' +
-      '<button class="tab ' + (tab==='agents'?'on':'') + '" data-act="atab" data-tab="agents">Agents</button>' +
-      '<button class="tab ' + (tab==='teams'?'on':'') + '" data-act="atab" data-tab="teams">Teams</button>' +
-      '<button class="tab ' + (tab==='autos'?'on':'') + '" data-act="atab" data-tab="autos">Automations</button>' +
-    '</div>' + body;
+  return body;
+}
+
+function renderTeams(){
+  return '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Agent teams</span>' +
+    '<button class="btn sm pink" data-act="newTeam">＋ New team</button></div>' +
+    '<div id="list-teams">' + teamsList() + '</div>' +
+    '<div class="card" style="padding:15px;margin-top:6px;border-radius:20px">' +
+      '<b style="font-size:13.6px">How teams work</b>' +
+      '<p style="margin:6px 0 0;font-size:12.6px;color:var(--dim);line-height:1.6">A team is a group of agents that answer one message together. The lead agent splits the work, members reply with their part, and the result lands in Artifacts.</p>' +
+    '</div>';
+}
+
+function renderAutomations(){
+  const live = db.automations.filter(a => a.on).length;
+  return '<div class="stats">' +
+      '<div class="stat card"><b>' + db.automations.length + '</b><span>Total</span></div>' +
+      '<div class="stat card"><b>' + live + '</b><span>Running</span></div>' +
+      '<div class="stat card"><b>' + (db.automations.length - live) + '</b><span>Paused</span></div>' +
+    '</div>' +
+    '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Scheduled work</span>' +
+    '<button class="btn sm mint" data-act="newAuto">＋ New</button></div>' +
+    '<div id="list-autos">' + autosList() + '</div>';
 }
 
 function renderDiscover(){
@@ -753,7 +859,7 @@ function renderArtifacts(){
       : '<div class="empty">Nothing saved yet. Artifacts appear here when an agent finishes work.</div>');
 }
 
-const RENDERERS = {chats:renderChats, agents:renderAgents, discover:renderDiscover, memory:renderMemory, artifacts:renderArtifacts};
+const RENDERERS = {chats:renderChats, agents:renderAgents, teams:renderTeams, automations:renderAutomations, discover:renderDiscover, memory:renderMemory, artifacts:renderArtifacts};
 
 function render(){
   applyTheme();
@@ -767,6 +873,14 @@ function refreshList(){
   if(v === 'chats'){
     const box = document.getElementById('list-chats');
     if(box) box.innerHTML = chatsList();
+  }
+  if(v === 'teams'){
+    const box = document.getElementById('list-teams');
+    if(box) box.innerHTML = teamsList();
+  }
+  if(v === 'automations'){
+    const box = document.getElementById('list-autos');
+    if(box) box.innerHTML = autosList();
   }
   if(v === 'agents'){
     const box = document.getElementById('list-agents');
@@ -868,10 +982,18 @@ function sendMsg(textArg){
   typingId = id;
   setTimeout(() => { if(chatOpen === id) renderMsgs(); }, 60);
   const delay = 700 + Math.random() * 700;
-  setTimeout(() => {
+  setTimeout(async () => {
     const chat = byId(db.chats, id);
     if(!chat) return;
-    const reply = isTeam ? teamReply(responder, text) : replyFor(responder, text);
+    let reply = '';
+    if(aiReady()){
+      try{
+        reply = await aiReply(aiSystem(byId(db.agents, responder)), chat.messages);
+      }catch(err){
+        toast('AI ' + err.message + ' · offline reply used');
+      }
+    }
+    if(!reply) reply = isTeam ? teamReply(responder, text) : replyFor(responder, text);
     chat.messages.push({from:'them', text:reply, ts:Date.now()});
     chat.updated = Date.now();
     if(chatOpen !== id) chat.unread = (chat.unread || 0) + 1;
@@ -1131,6 +1253,27 @@ function openArtifact(id){
     '<button class="btn" data-act="closeModal">Done</button></div>');
 }
 
+function aiSettingsCard(){
+  const a = aiCfg();
+  const on = aiReady();
+  const opts = Object.keys(AI_PRESETS).map(k =>
+    '<option value="' + k + '"' + (a.provider === k ? ' selected' : '') + '>' + AI_PRESETS[k].label + '</option>').join('');
+  return '<div class="card" style="padding:14px;margin-bottom:12px">' +
+    '<div class="row" style="margin-bottom:10px"><div class="grow"><b style="font-size:14px">Live AI brain</b>' +
+      '<div class="mini" style="margin-top:3px">' + (on ? 'Connected · ' + (AI_PRESETS[a.provider]||AI_PRESETS.openai).label + ' · real replies' : 'Off · replies are offline until you add a key') + '</div></div>' +
+      '<span class="chip ' + (on ? 'mint' : '') + '">' + (on ? 'LIVE' : 'OFFLINE') + '</span></div>' +
+    '<label class="mini">Provider</label>' +
+    '<select id="aiProvider" class="input" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' + opts + '</select>' +
+    '<label class="mini">API key (stored only on this device)</label>' +
+    '<input id="aiKey" class="input" type="password" placeholder="sk-…" value="' + esc(a.key || '') + '" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' +
+    '<label class="mini">Model (optional)</label>' +
+    '<input id="aiModel" class="input" placeholder="' + (AI_PRESETS[a.provider]||AI_PRESETS.openai).model + '" value="' + esc(a.model || '') + '" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' +
+    '<div class="row" style="gap:8px">' +
+      '<button class="btn sm" style="flex:1;justify-content:center" data-act="saveAi">Save key</button>' +
+      '<button class="btn sm soft" style="flex:1;justify-content:center" data-act="clearAi">Remove</button>' +
+    '</div></div>';
+}
+
 function openSettings(){
   const dark = db.ui.theme === 'dark';
   openModal('<h3>Settings</h3>' +
@@ -1140,6 +1283,7 @@ function openSettings(){
     '<div class="card" style="padding:14px;margin-bottom:12px"><div class="row">' +
       '<div class="grow"><b style="font-size:14px">Add to Home Screen</b><div class="mini" style="margin-top:3px">iOS Safari: Share, then Add to Home Screen</div></div>' +
       '<span style="font-size:18px">📲</span></div></div>' +
+    aiSettingsCard() +
     '<div class="row" style="gap:8px;margin-bottom:10px">' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="exportJson">Export data</button>' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="resetAll">Reset app</button>' +
@@ -1220,6 +1364,20 @@ document.addEventListener('click', e => {
       db.ui.theme = db.ui.theme === 'dark' ? 'light' : 'dark';
       save(); applyTheme(); openSettings();
       break;
+    case 'saveAi': {
+      const a = aiCfg();
+      a.provider = document.getElementById('aiProvider').value;
+      a.key = document.getElementById('aiKey').value.trim();
+      a.model = document.getElementById('aiModel').value.trim();
+      save();
+      toast(aiReady() ? 'Live AI connected' : 'Key saved (looks short)');
+      openSettings();
+      break;
+    }
+    case 'clearAi': {
+      db.ai = {provider:'openai', key:'', model:''};
+      save(); toast('Reverted to offline replies'); openSettings(); break;
+    }
     case 'exportJson': exportJson(); break;
     case 'resetAll':
       db = clone(seedData());
@@ -1409,7 +1567,24 @@ setInterval(() => {
   updateChrome();
 }, 30000);
 
-/* ================= boot ================= */
+/* ================= top nav behaviour ================= */
+const screenEl = document.getElementById('screen');
+const topHeader = document.querySelector('header.top');
+const topNav = document.getElementById('topnav');
+function onScreenScroll(){
+  const y = screenEl.scrollTop;
+  topHeader.classList.toggle('compact', y > 26);
+  topNav.classList.toggle('stuck', y > 26);
+}
+screenEl.addEventListener('scroll', onScreenScroll, {passive:true});
+onScreenScroll();
+
+/* service worker (offline shell, installable app) */
+if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')){
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+
+/* boot ================= */
 applyTheme();
 render();
 if(db.ui.theme === 'dark') document.getElementById('themeBtn').textContent = '☀';

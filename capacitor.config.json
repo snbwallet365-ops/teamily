@@ -1,0 +1,26 @@
+{
+  "appId": "com.visamotion.teamily",
+  "appName": "Teamily",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always",
+    "scheme": "Teamily",
+    "limitsNavigationsToAppBoundDomains": false,
+    "backgroundColor": "#eef2fb"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 700,
+      "backgroundColor": "#eef2fb",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#eef2fb"
+    },
+    "Keyboard": {
+      "resize": "native"
+    }
+  }
+}

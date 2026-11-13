@@ -1,46 +1,56 @@
-# Teamily
+# Teamily · AI agent team
 
-An iOS style AI agent team workspace with a liquid glass interface. Single file app, no build step, no server.
+A working AI-agent team app: chats, agents, teams, automations, discover, memory and artifacts.
+Light "liquid glass" design first, dark mode one tap away, iOS-style top navigation bar across
+every section.
 
-Live preview: https://snbwallet365-ops.github.io/teamily/
+**Live (web / PWA):** https://snbwallet365-ops.github.io/teamily/
 
-## What is inside
+## What works
 
-- **Light glass theme by default** with a full dark glass theme toggle (header button or Settings)
-- **Gradient buttons** with an eye catching press glow (`.tapped` animation), soft shadows, spring press scale
-- **Chats**: live conversations, typing indicator, timestamps, unread badges, quick reply chips, search, auto saved replies
-- **Agents**: create, edit, delete, search, detail sheet with activity stats
-- **Agent Teams**: create a team, pick the lead agent, group chat that rotates replies between members
-- **Automations**: create, toggle on and off, run now (result is appended to the agent chat), delete
-- **Discover**: category filter, add specialists to your agents, try before adding
-- **Memory**: add, edit, delete long term facts
-- **Artifacts**: save, open, delete outputs; conversations auto save an artifact every few turns
-- **Settings**: dark mode, export JSON backup, reset app, iOS Add to Home Screen hint
-- **Real time**: BroadcastChannel plus storage events keep every open tab in sync; clock and relative times update live
-- State persists in `localStorage` under `teamily.v3`
+| Area | Behaviour |
+| --- | --- |
+| Top nav bar | Collapsing iOS header + scrollable section bar with all 7 sections |
+| Chats | Real conversation threads, typing state, unread badges, search, quick replies |
+| Agents | Create, edit, delete, chat with any agent |
+| Teams | Group agents, team chat rotates members, results saved as artifacts |
+| Automations | Create, schedule text, toggle on/off, Run now |
+| Discover | Specialist catalogue, add to your agents, try chat |
+| Memory | Long-term facts your team keeps |
+| Artifacts | Saved outputs from agents, open and delete |
+| Live AI brain | Optional: add your own OpenAI / Anthropic / OpenRouter / Groq key in Settings and replies become real model output |
+| Storage | localStorage, survives reload; BroadcastChannel keeps open tabs in sync; JSON export/import |
+| Offline | Service worker caches the app shell, installable to the home screen |
 
-## Structure
-
-```
-index.html    the whole app (HTML, CSS, JS)
-README.md
-```
+The API key never leaves the device: it is stored in localStorage and sent only to the provider
+you pick. With no key the app runs on its built-in offline reply engine.
 
 ## Run locally
 
-Open `index.html` in any modern browser. No install, no dependencies.
+```bash
+npm run serve          # copies the app into www/ and serves it on :4173
+```
 
-## Deploy
+## Native iOS app (App Store path)
 
-GitHub Pages is enabled on this repository. Every push to `main` republishes the live preview.
+The web app ships with a Capacitor native shell, so the same code runs as a real iOS app.
 
-## Branches
+```bash
+npm install
+npm run ios:add        # creates the Xcode project in ios/
+npm run ios:assets     # writes AppIcon + launch screen from assets/
+npm run ios:open       # opens ios/App/App.xcworkspace in Xcode
+```
 
-- `main` is the published build
-- `feature/*` branches hold work in progress before it reaches the published build
+Then in Xcode: pick a signing team, plug in an iPhone, press Run. To publish, Product > Archive
+> Distribute App > App Store Connect. That step needs macOS with Xcode and a paid Apple Developer
+account, which cannot be done from a browser or a Linux server.
 
-## Keyboard and gesture notes
+Details and the review checklist: [ios/README.md](ios/README.md)
 
-- `Enter` in the composer sends the message
-- Tap the theme button (moon or sun) to switch glass themes
-- On iOS Safari use Share then Add to Home Screen for the full screen app view
+## Files
+
+- `index.html` - the whole app (single file, no build step)
+- `manifest.webmanifest`, `sw.js`, `icons/` - PWA install + offline shell
+- `capacitor.config.json`, `package.json` - native iOS wrapper
+- `assets/` - 1024 icon and launch image for the iOS asset generator
