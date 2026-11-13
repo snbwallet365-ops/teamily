@@ -1,0 +1,26 @@
+{
+  "name": "teamily",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Teamily · AI agent team app (web + native iOS shell)",
+  "scripts": {
+    "build:web": "rm -rf www && mkdir -p www && cp index.html manifest.webmanifest sw.js www/ && cp -R icons www/icons",
+    "serve": "npm run build:web && npx http-server www -p 4173 -c-1",
+    "ios:add": "npm run build:web && npx cap add ios",
+    "ios:sync": "npm run build:web && npx cap sync ios",
+    "ios:assets": "npx @capacitor/assets generate --ios --iconBackgroundColor '#eef2fb' --splashBackgroundColor '#eef2fb'",
+    "ios:open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/ios": "^6.2.0",
+    "@capacitor/status-bar": "^6.0.2",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/haptics": "^6.0.2",
+    "@capacitor/keyboard": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/assets": "^3.0.5"
+  }
+}
