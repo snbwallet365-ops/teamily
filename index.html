@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070b18">
+<title>Teamily — AI Agent Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#f4f7ff;
+    --dim:rgba(244,247,255,.62);
+    --dimmer:rgba(244,247,255,.42);
+    --glass:rgba(255,255,255,.085);
+    --glass-2:rgba(255,255,255,.14);
+    --stroke:rgba(255,255,255,.16);
+    --stroke-2:rgba(255,255,255,.28);
+    --violet:#8b7bff;
+    --cyan:#4fd8e8;
+    --pink:#ff8ac3;
+    --lime:#9ef07a;
+    --r:26px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,'SF Pro Text',system-ui,sans-serif;
+    color:var(--ink);
+    background:#05070f;
+    overflow:hidden;
+  }
+  /* ---------- ambient liquid background ---------- */
+  .bg{position:fixed;inset:-20%;z-index:0;filter:blur(60px) saturate(140%);opacity:.9;pointer-events:none}
+  .blob{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite}
+  .b1{width:52vw;height:52vw;left:-8%;top:-6%;background:radial-gradient(circle at 30% 30%,#5b3cff,#1b0f5e 70%)}
+  .b2{width:46vw;height:46vw;right:-10%;top:12%;background:radial-gradient(circle at 60% 40%,#00b9d4,#063a52 70%);animation-delay:-7s}
+  .b3{width:44vw;height:44vw;left:10%;bottom:-14%;background:radial-gradient(circle at 40% 60%,#ff5fa2,#4a0f3a 70%);animation-delay:-13s;opacity:.75}
+  .b4{width:30vw;height:30vw;right:6%;bottom:2%;background:radial-gradient(circle at 50% 50%,#7ef0a8,#0d3a22 70%);animation-delay:-4s;opacity:.5}
+  @keyframes drift{
+    0%,100%{transform:translate3d(0,0,0) scale(1)}
+    33%{transform:translate3d(4%,-5%,0) scale(1.08)}
+    66%{transform:translate3d(-5%,4%,0) scale(.95)}
+  }
+  .noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  /* ---------- glass primitives ---------- */
+  .glass{
+    position:relative;
+    background:linear-gradient(160deg,var(--glass-2),var(--glass) 45%,rgba(255,255,255,.05));
+    backdrop-filter:blur(22px) saturate(170%);
+    -webkit-backdrop-filter:blur(22px) saturate(170%);
+    border:1px solid var(--stroke);
+    border-radius:var(--r);
+    box-shadow:0 18px 40px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(255,255,255,.06);
+  }
+  .glass::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(120% 80% at 12% -10%,rgba(255,255,255,.34),transparent 55%);
+    opacity:.7;
+  }
+
+  /* ---------- app shell ---------- */
+  .phone{
+    position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
+    max-width:520px;margin:0 auto;padding:0 16px;
+  }
+  @media(min-width:900px){
+    body{overflow:auto}
+    .phone{height:100vh;padding-top:8px}
+  }
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:14px 6px 6px;font-size:12.5px;font-weight:600;color:var(--dim);letter-spacing:.02em}
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:10px 4px 14px;gap:12px}
+  .title{font-size:30px;font-weight:700;letter-spacing:-.8px;margin:0}
+  .icon-btn{
+    width:42px;height:42px;border-radius:16px;display:grid;place-items:center;
+    background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.07));
+    border:1px solid var(--stroke);backdrop-filter:blur(18px);color:var(--ink);
+    font-size:19px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(0,0,0,.3);
+    transition:.18s;
+  }
+  .icon-btn:active{transform:scale(.93)}
+
+  .tabs{display:flex;gap:6px;padding:5px;border-radius:20px;margin-bottom:16px}
+  .tab{
+    flex:1;border:0;background:transparent;color:var(--dim);font:inherit;font-size:13px;font-weight:600;
+    padding:9px 4px;border-radius:15px;cursor:pointer;transition:.2s;white-space:nowrap;
+  }
+  .tab.on{
+    color:#0a0f1f;background:linear-gradient(180deg,#ffffff,#dfe6f5);
+    box-shadow:0 6px 16px rgba(0,0,0,.35), inset 0 1px 0 #fff;
+  }
+
+  .scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:2px 2px 130px;scrollbar-width:none}
+  .scroll::-webkit-scrollbar{display:none}
+
+  /* ---------- search ---------- */
+  .search{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:18px;margin-bottom:16px}
+  .search input{
+    flex:1;background:none;border:0;outline:none;color:var(--ink);font:inherit;font-size:14.5px;
+  }
+  .search input::placeholder{color:var(--dimmer)}
+
+  /* ---------- agent cards ---------- */
+  .agent{display:flex;gap:13px;align-items:flex-start;padding:15px;border-radius:22px;margin-bottom:11px;cursor:pointer;transition:.18s}
+  .agent:active{transform:scale(.985)}
+  .face{
+    width:52px;height:52px;border-radius:17px;flex:0 0 52px;display:grid;place-items:center;font-size:24px;
+    background:linear-gradient(150deg,rgba(255,255,255,.3),rgba(255,255,255,.09));
+    border:1px solid var(--stroke-2);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45), inset 0 -8px 16px rgba(0,0,0,.16), 0 6px 14px rgba(0,0,0,.28);
+  }
+  .agent .body{flex:1;min-width:0}
+  .agent h4{margin:0 0 4px;font-size:15px;font-weight:600;letter-spacing:-.2px}
+  .agent p{margin:0;font-size:12.8px;line-height:1.5;color:var(--dim);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pill{
+    font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:13px;white-space:nowrap;
+    background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.1));
+    border:1px solid var(--stroke-2);color:var(--ink);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .pill.solid{background:linear-gradient(180deg,#ffffff,#dbe4f7);color:#0a0f1f;border-color:transparent}
+
+  /* ---------- chats ---------- */
+  .chatrow{display:flex;gap:13px;align-items:center;padding:14px 15px;border-radius:20px;margin-bottom:10px;cursor:pointer}
+  .chatrow .body{flex:1;min-width:0}
+  .chatrow h4{margin:0 0 3px;font-size:14.5px;font-weight:600}
+  .chatrow p{margin:0;font-size:12.6px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .time{font-size:11px;color:var(--dimmer);white-space:nowrap}
+  .unread{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+
+  /* ---------- memory / artifacts ---------- */
+  .memcard{padding:15px 16px;border-radius:20px;margin-bottom:11px}
+  .memcard .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:6px;font-weight:600}
+  .memcard .v{font-size:14px;line-height:1.55}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .tag{font-size:11.5px;padding:4px 10px;border-radius:11px;background:rgba(255,255,255,.1);border:1px solid var(--stroke);color:var(--dim)}
+  .artgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .artcard{padding:14px;border-radius:20px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+  .artcard .ico{font-size:22px}
+  .artcard b{font-size:13.5px;font-weight:600;line-height:1.35}
+  .artcard span{font-size:11.5px;color:var(--dimmer)}
+
+  /* ---------- bottom nav ---------- */
+  .dock{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:20px;z-index:30;
+    width:min(488px,calc(100% - 32px));display:flex;justify-content:space-around;align-items:center;
+    padding:9px 8px;border-radius:28px;
+  }
+  .dock button{
+    border:0;background:none;color:var(--dimmer);font:inherit;font-size:10.5px;font-weight:600;
+    display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 10px;border-radius:18px;
+    cursor:pointer;transition:.18s;
+  }
+  .dock button .g{font-size:19px;line-height:1}
+  .dock button.on{color:var(--ink);background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+  .dock button:active{transform:scale(.94)}
+
+  /* ---------- chat sheet ---------- */
+  .sheet{
+    position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;
+    background:rgba(6,9,18,.55);backdrop-filter:blur(30px) saturate(160%);
+    -webkit-backdrop-filter:blur(30px) saturate(160%);
+    transform:translateY(100%);transition:transform .34s cubic-bezier(.32,.72,0,1);
+  }
+  .sheet.open{transform:translateY(0)}
+  .sheet-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--stroke)}
+  .sheet-head h3{margin:0;font-size:16px;font-weight:600}
+  .sheet-head .st{font-size:11.5px;color:var(--dim)}
+  .msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto;width:100%}
+  .msg{max-width:82%;padding:12px 15px;border-radius:20px;font-size:14px;line-height:1.55;animation:pop .25s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .msg.them{align-self:flex-start;border-bottom-left-radius:8px;
+    background:linear-gradient(160deg,rgba(255,255,255,.19),rgba(255,255,255,.08));
+    border:1px solid var(--stroke);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+  .msg.me{align-self:flex-end;border-bottom-right-radius:8px;color:#08101f;font-weight:500;
+    background:linear-gradient(180deg,#ffffff,#d9e3f8);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+  .composer{display:flex;gap:9px;padding:12px 16px 22px;max-width:520px;margin:0 auto;width:100%}
+  .composer input{
+    flex:1;padding:14px 17px;border-radius:22px;border:1px solid var(--stroke);
+    background:rgba(255,255,255,.1);backdrop-filter:blur(18px);color:var(--ink);font:inherit;font-size:14.5px;outline:none;
+  }
+  .composer input::placeholder{color:var(--dimmer)}
+  .send{width:48px;height:48px;flex:0 0 48px;border-radius:50%;border:0;cursor:pointer;font-size:17px;
+    background:linear-gradient(180deg,#ffffff,#cfd9ef);color:#08101f;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+  .send:active{transform:scale(.93)}
+
+  .toast{
+    position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
+    padding:10px 18px;border-radius:16px;font-size:13px;z-index:80;opacity:0;transition:.25s;pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .view{display:none}.view.on{display:block}
+  .sec-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);font-weight:700;margin:20px 4px 10px}
+  .empty{text-align:center;color:var(--dim);font-size:13.5px;padding:40px 10px}
+</style>
+</head>
+<body>
+<div class="bg"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<div class="noise"></div>
+
+<div class="phone">
+  <div class="statusbar"><span>9:41</span><span>◍ ⌁ ▮</span></div>
+
+  <header class="top">
+    <h1 class="title" id="page-title">Agents</h1>
+    <div style="display:flex;gap:9px">
+      <button class="icon-btn" onclick="toast('Notification center')">⛭</button>
+      <button class="icon-btn" onclick="toast('New agent')">＋</button>
+    </div>
+  </header>
+
+  <div class="tabs glass">
+    <button class="tab on" data-tab="agents">Agents</button>
+    <button class="tab" data-tab="teams">Agent Teams</button>
+    <button class="tab" data-tab="automations">Automations</button>
+  </div>
+
+  <div class="scroll">
+    <!-- AGENTS -->
+    <section class="view on" id="v-agents">
+      <div class="search glass"><span style="opacity:.55">⌕</span><input id="q" placeholder="Search agents" oninput="renderAgents()"><span style="opacity:.55">☰</span></div>
+      <div id="agent-list"></div>
+      <div class="sec-title">Recently used</div>
+      <div id="recent-agents"></div>
+    </section>
+
+    <!-- TEAMS -->
+    <section class="view" id="v-teams">
+      <div id="team-list"></div>
+    </section>
+
+    <!-- AUTOMATIONS -->
+    <section class="view" id="v-automations">
+      <div id="auto-list"></div>
+    </section>
+
+    <!-- CHATS -->
+    <section class="view" id="v-chats">
+      <div id="chat-list"></div>
+    </section>
+
+    <!-- DISCOVER -->
+    <section class="view" id="v-discover">
+      <div class="sec-title">Categories</div>
+      <div class="tags" id="discover-tags"></div>
+      <div class="sec-title">Trending</div>
+      <div id="discover-list"></div>
+    </section>
+
+    <!-- MEMORY -->
+    <section class="view" id="v-memory">
+      <div id="memory-list"></div>
+    </section>
+
+    <!-- ARTIFACTS -->
+    <section class="view" id="v-artifacts">
+      <div class="artgrid" id="artifact-grid"></div>
+    </section>
+  </div>
+</div>
+
+<nav class="dock glass">
+  <button class="on" data-view="chats" onclick="go('chats')"><span class="g">◌</span>Chats</button>
+  <button data-view="agents" onclick="go('agents')"><span class="g">◉</span>Agents</button>
+  <button data-view="discover" onclick="go('discover')"><span class="g">◈</span>Discover</button>
+  <button data-view="memory" onclick="go('memory')"><span class="g">▤</span>Memory</button>
+  <button data-view="artifacts" onclick="go('artifacts')"><span class="g">▣</span>Artifacts</button>
+</nav>
+
+<!-- chat sheet -->
+<div class="sheet" id="sheet">
+  <div class="sheet-head">
+    <div class="face" id="sheet-face">✦</div>
+    <div style="flex:1">
+      <h3 id="sheet-name">Agent</h3>
+      <div class="st" id="sheet-role">online</div>
+    </div>
+    <button class="icon-btn" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="composer">
+    <input id="msg-input" placeholder="Message your agent…" onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="send" onclick="sendMsg()">↑</button>
+  </div>
+</div>
+
+<div class="toast glass" id="toast">ok</div>
+
+<script>
+/* ---------------- data ---------------- */
+const AGENTS = [
+  {id:'a1', name:'Content Creator', icon:'✍️', desc:'Expert content strategist and creator for multi-platform campaigns.'},
+  {id:'a2', name:'Image Prompt Engineer', icon:'📷', desc:'Expert photography prompt engineer crafting detailed, evocative visuals.'},
+  {id:'a3', name:'Visual Storyteller', icon:'🎞️', desc:'Expert visual communication specialist creating compelling narratives.'},
+  {id:'a4', name:'Short-Video Editing Coach', icon:'▶️', desc:'Hands-on short-video editing coach covering the full post-production pipeline.'},
+  {id:'a5', name:'Frontend Developer', icon:'{ }', desc:'Expert frontend developer specialising in modern web technologies and UI.'},
+  {id:'a6', name:'Pitch Deck Builder', icon:'📊', desc:'Builds investor pitch decks and fundraising materials with narrative drive.'},
+  {id:'a7', name:'Visa & Immigration Guide', icon:'🛂', desc:'Guides visa applications, document checklists and appointment prep.'},
+  {id:'a8', name:'Learning Designer', icon:'🎓', desc:'Instructional design and curriculum development for online courses.'}
+];
+
+const TEAMS = [
+  {name:'Visa Launch Squad', members:'4 agents · Visa Guide, Content Creator, Frontend, Pitch Deck', icon:'🚀'},
+  {name:'Content Engine', members:'3 agents · Creator, Visual Storyteller, Video Coach', icon:'🎨'},
+  {name:'Product Studio', members:'3 agents · Frontend, Image Prompt, Learning Designer', icon:'🧩'}
+];
+
+const AUTOMATIONS = [
+  {name:'Daily visa task digest', when:'Every day · 9:00', on:true},
+  {name:'Weekly content calendar', when:'Every Monday · 8:00', on:true},
+  {name:'New lead follow-up', when:'When a record is created', on:false}
+];
+
+const CHATS = [
+  {id:'c1', name:'Visa & Immigration Guide', icon:'🛂', last:'Saudi Arabia visit visa checklist is ready.', time:'9:41', unread:true},
+  {id:'c2', name:'Frontend Developer', icon:'{ }', last:'Liquid glass nav is pushed to the preview build.', time:'8:12', unread:true},
+  {id:'c3', name:'Content Creator', icon:'✍️', last:'Drafted 3 posts for the launch week.', time:'Yesterday', unread:false},
+  {id:'c4', name:'Pitch Deck Builder', icon:'📊', last:'Slide 7 has a new traction chart.', time:'Tue', unread:false}
+];
+
+const MEMORY = [
+  {k:'Business', v:'Runs visa and immigration services under the VisaMOTion 365 brand.'},
+  {k:'Preference', v:'Prefers replies in Bengali, written in romanised Bangla.'},
+  {k:'Projects', v:'Building Teamily — an AI agent team workspace with an iOS liquid-glass UI.'},
+  {k:'Working style', v:'Wants work finished end to end with a shareable preview link.'}
+];
+
+const ARTIFACTS = [
+  {icon:'🗂️', name:'Visa checklist board', meta:'Updated 2h ago'},
+  {icon:'📈', name:'Launch metrics', meta:'Updated today'},
+  {icon:'🎬', name:'Storyboard v3', meta:'Updated Mon'},
+  {icon:'🧾', name:'Pitch deck', meta:'12 slides'},
+  {icon:'🌐', name:'Landing page', meta:'Draft'},
+  {icon:'📚', name:'Course outline', meta:'6 modules'}
+];
+
+const REPLIES = {
+  'a1':'Here are three angles: a launch teaser, a proof story, and a carousel on requirements. Want me to write all three?',
+  'a2':'Try: "editorial portrait, soft window light, 85mm, shallow depth, muted teal palette, film grain".',
+  'a3':'I mapped your content into a three-act story: problem, journey, arrival. Want the visual beats?',
+  'a4':'Start with a 3-second hook, then cut on motion. Keep every shot under 1.8s for retention.',
+  'a5':'Pushed the glass nav, blur layers and dock spacing. Pull request is ready for review.',
+  'a6':'Added a traction slide and tightened the narrative to nine slides. Next: the ask.',
+  'a7':'For Saudi Arabia you need passport (6 months valid), white-background photos, ticket, hotel booking, and 3-6 months of bank statements.',
+  'a8':'I split the course into six modules with a practice task after each one.'
+};
+
+/* ---------------- state ---------------- */
+const KEY = 'teamily.v1';
+let st = {view:'agents', tab:'agents', sheet:null, msgs:{}};
+try{ const raw = localStorage.getItem(KEY); if(raw) st = Object.assign(st, JSON.parse(raw)); }catch(e){}
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+
+/* ---------------- render ---------------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function agentCard(a){
+  return `<div class="agent glass" onclick="openSheet('${a.id}','${esc(a.name)}','${esc(a.desc)}','${a.icon}')">
+    <div class="face">${a.icon}</div>
+    <div class="body"><h4>${esc(a.name)}</h4><p>${esc(a.desc)}</p></div>
+    <span class="pill">Chat</span>
+  </div>`;
+}
+function renderAgents(){
+  const q = (document.getElementById('q').value||'').toLowerCase();
+  const list = AGENTS.filter(a=>!q || a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q));
+  document.getElementById('agent-list').innerHTML = list.length ? list.map(agentCard).join('') : '<div class="empty">No agents match that search.</div>';
+  document.getElementById('recent-agents').innerHTML = AGENTS.slice(0,3).map(a=>
+    `<div class="chatrow glass" onclick="openSheet('${a.id}','${esc(a.name)}','${esc(a.desc)}','${a.icon}')">
+      <div class="face" style="width:42px;height:42px;flex:0 0 42px;font-size:19px">${a.icon}</div>
+      <div class="body"><h4>${esc(a.name)}</h4><p>Continue where you left off</p></div>
+      <span class="time">↗</span>
+    </div>`).join('');
+}
+function renderTeams(){
+  document.getElementById('team-list').innerHTML = TEAMS.map(t=>
+    `<div class="memcard glass">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="face" style="width:44px;height:44px;flex:0 0 44px;font-size:20px">${t.icon}</div>
+        <div><b style="font-size:14.5px">${esc(t.name)}</b>
+        <div style="font-size:12.3px;color:var(--dim);margin-top:2px">${esc(t.members)}</div></div>
+      </div>
+    </div>`).join('');
+}
+function renderAutomations(){
+  document.getElementById('auto-list').innerHTML = AUTOMATIONS.map((a,i)=>
+    `<div class="memcard glass" style="display:flex;align-items:center;gap:12px">
+      <div style="flex:1"><b style="font-size:14px">${esc(a.name)}</b>
+      <div style="font-size:12.3px;color:var(--dim);margin-top:3px">${esc(a.when)}</div></div>
+      <button class="pill ${a.on?'solid':''}" onclick="toggleAuto(${i})">${a.on?'On':'Off'}</button>
+    </div>`).join('');
+}
+function toggleAuto(i){ AUTOMATIONS[i].on = !AUTOMATIONS[i].on; persist(); renderAutomations(); toast(AUTOMATIONS[i].on?'Automation on':'Automation paused'); }
+function renderChats(){
+  document.getElementById('chat-list').innerHTML = CHATS.map(c=>
+    `<div class="chatrow glass" onclick="openSheet('${c.id}','${esc(c.name)}','agent','${c.icon}')">
+      <div class="face">${c.icon}</div>
+      <div class="body"><h4>${esc(c.name)}</h4><p>${esc(c.last)}</p></div>
+      <div style="text-align:right"><div class="time">${esc(c.time)}</div>${c.unread?'<div class="unread" style="margin:6px 0 0 auto"></div>':''}</div>
+    </div>`).join('');
+}
+function renderDiscover(){
+  document.getElementById('discover-tags').innerHTML = ['All','Content','Design','Code','Business','Education','Travel']
+    .map((t,i)=>`<span class="tag" style="background:${i===0?'rgba(255,255,255,.24)':'rgba(255,255,255,.1)'}">${t}</span>`).join('');
+  document.getElementById('discover-list').innerHTML = AGENTS.slice(2,7).map(agentCard).join('');
+}
+function renderMemory(){
+  document.getElementById('memory-list').innerHTML = MEMORY.map(m=>
+    `<div class="memcard glass"><div class="k">${esc(m.k)}</div><div class="v">${esc(m.v)}</div></div>`).join('');
+}
+function renderArtifacts(){
+  document.getElementById('artifact-grid').innerHTML = ARTIFACTS.map(a=>
+    `<div class="artcard glass" onclick="toast('${esc(a.name)}')">
+      <div class="ico">${a.icon}</div>
+      <div><b>${esc(a.name)}</b><div style="margin-top:4px"><span>${esc(a.meta)}</span></div></div>
+    </div>`).join('');
+}
+
+/* ---------------- navigation ---------------- */
+function go(view){
+  st.view = view; persist();
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  const el = document.getElementById('v-'+view);
+  if(el) el.classList.add('on');
+  document.querySelectorAll('.dock button').forEach(b=>b.classList.toggle('on', b.dataset.view===view));
+  const titles = {chats:'Chats',agents:'Agents',discover:'Discover',memory:'Memory',artifacts:'Artifacts'};
+  document.getElementById('page-title').textContent = titles[view] || 'Teamily';
+  document.querySelector('.scroll').scrollTop = 0;
+}
+document.querySelector('.tabs').addEventListener('click', e=>{
+  const b = e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  b.classList.add('on');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  const map = {agents:'v-agents', teams:'v-teams', automations:'v-automations'};
+  document.getElementById(map[b.dataset.tab]).classList.add('on');
+  document.getElementById('page-title').textContent = b.dataset.tab === 'agents' ? 'Agents' : (b.dataset.tab === 'teams' ? 'Agent Teams' : 'Automations');
+  document.querySelector('.scroll').scrollTop = 0;
+});
+
+/* ---------------- chat sheet ---------------- */
+function openSheet(id,name,role,icon){
+  st.sheet = id;
+  document.getElementById('sheet-name').textContent = name;
+  document.getElementById('sheet-role').textContent = role || 'agent';
+  document.getElementById('sheet-face').textContent = icon || '✦';
+  document.getElementById('sheet').classList.add('open');
+  renderMsgs(id, name);
+}
+function closeSheet(){
+  document.getElementById('sheet').classList.remove('open');
+  st.sheet = null; persist();
+}
+function renderMsgs(id, name){
+  if(!st.msgs[id]) st.msgs[id] = [{from:'them', text:`Hi, ${name} here. What are we working on today?`}];
+  const box = document.getElementById('msgs');
+  box.innerHTML = st.msgs[id].map(m=>`<div class="msg ${m.from}">${esc(m.text)}</div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+function sendMsg(){
+  const inp = document.getElementById('msg-input');
+  const text = inp.value.trim();
+  if(!text || !st.sheet) return;
+  st.msgs[st.sheet] = st.msgs[st.sheet] || [];
+  st.msgs[st.sheet].push({from:'me', text});
+  inp.value = '';
+  renderMsgs(st.sheet, document.getElementById('sheet-name').textContent);
+  const id = st.sheet;
+  persist();
+  setTimeout(()=>{
+    const reply = REPLIES[id] || 'On it. I will put the result in Artifacts when it is ready.';
+    st.msgs[id].push({from:'them', text:reply});
+    if(st.sheet === id) renderMsgs(id, document.getElementById('sheet-name').textContent);
+    persist();
+  }, 650);
+}
+
+/* ---------------- toast ---------------- */
+let tm;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(tm); tm = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* ---------------- boot ---------------- */
+renderAgents(); renderTeams(); renderAutomations(); renderChats();
+renderDiscover(); renderMemory(); renderArtifacts();
+go(st.view || 'chats');
+</script>
+</body>
+</html>
