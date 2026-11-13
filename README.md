@@ -18,7 +18,7 @@ every section.
 | Discover | Specialist catalogue, add to your agents, try chat |
 | Memory | Long-term facts your team keeps |
 | Artifacts | Saved outputs from agents, open and delete |
-| Live AI brain | Optional: add your own OpenAI / Anthropic / OpenRouter / Groq key in Settings and replies become real model output |
+| Live AI brain | Grok (xAI) by default: add your own key in Settings and replies become real Grok output. OpenAI, Anthropic, OpenRouter and Groq are also selectable |
 | Storage | localStorage, survives reload; BroadcastChannel keeps open tabs in sync; JSON export/import |
 | Offline | Service worker caches the app shell, installable to the home screen |
 

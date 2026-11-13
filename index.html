@@ -400,6 +400,9 @@ const GRADS = [
 
 function seedData(){
   const agents = [
+    {id:'a9', name:'Grok', icon:'✦', role:'Grok assistant · default brain', g:2, pinned:true,
+      desc:'Powered by xAI Grok. Answers anything, plans work, and hands it to the right specialist.',
+      skills:['Grok','Chat','Planning']},
     {id:'a1', name:'Content Creator', icon:'✍️', role:'Content strategist', g:0, pinned:true,
       desc:'Multi-platform content strategy, captions, carousels and launch copy.',
       skills:['Social','Captions','Launch copy']},
@@ -445,6 +448,11 @@ function seedData(){
   ];
 
   const chats = [
+    {id:'c0', kind:'agent', ref:'a9', unread:1, updated: Date.now()-1000*60*1, messages:[
+      {from:'them', text:'Grok is connected. Ask for anything: a plan, a draft, a fix, or a decision.', ts:Date.now()-1000*60*2},
+      {from:'me', text:'What can you do first?', ts:Date.now()-1000*60*1},
+      {from:'them', text:'Pick a section and I will run it: Chats for talk, Teams for group work, Automations for scheduled jobs, Artifacts for saved output.', ts:Date.now()-1000*60}
+    ]},
     {id:'c1', kind:'agent', ref:'a7', unread:2, updated: Date.now()-1000*60*3, messages:[
       {from:'them', text:'Saudi Arabia visit visa checklist is ready. Want the file?', ts:Date.now()-1000*60*9},
       {from:'me', text:'Yes, send it.', ts:Date.now()-1000*60*6},
@@ -550,13 +558,14 @@ function toast(msg){
 
 /* ================= real AI (bring your own key) ================= */
 const AI_PRESETS = {
+  xai:{label:'xAI Grok', url:'https://api.x.ai/v1/chat/completions', model:'grok-4'},
   openai:{label:'OpenAI', url:'https://api.openai.com/v1/chat/completions', model:'gpt-4o-mini'},
   anthropic:{label:'Anthropic', url:'https://api.anthropic.com/v1/messages', model:'claude-sonnet-4-5'},
-  openrouter:{label:'OpenRouter', url:'https://openrouter.ai/api/v1/chat/completions', model:'openai/gpt-4o-mini'},
+  openrouter:{label:'OpenRouter', url:'https://openrouter.ai/api/v1/chat/completions', model:'x-ai/grok-4'},
   groq:{label:'Groq', url:'https://api.groq.com/openai/v1/chat/completions', model:'llama-3.3-70b-versatile'}
 };
 function aiCfg(){
-  if(!db.ai) db.ai = {provider:'openai', key:'', model:''};
+  if(!db.ai) db.ai = {provider:'xai', key:'', model:''};
   return db.ai;
 }
 function aiReady(){
@@ -569,7 +578,7 @@ function aiSystem(agent){
 }
 async function aiReply(system, msgs){
   const a = aiCfg();
-  const preset = AI_PRESETS[a.provider] || AI_PRESETS.openai;
+  const preset = AI_PRESETS[a.provider] || AI_PRESETS.xai;
   const model = (a.model || preset.model).trim();
   const history = msgs.slice(-12).map(m => ({role: m.from === 'me' ? 'user' : 'assistant', content: m.text}));
   let res;
@@ -1260,14 +1269,14 @@ function aiSettingsCard(){
     '<option value="' + k + '"' + (a.provider === k ? ' selected' : '') + '>' + AI_PRESETS[k].label + '</option>').join('');
   return '<div class="card" style="padding:14px;margin-bottom:12px">' +
     '<div class="row" style="margin-bottom:10px"><div class="grow"><b style="font-size:14px">Live AI brain</b>' +
-      '<div class="mini" style="margin-top:3px">' + (on ? 'Connected · ' + (AI_PRESETS[a.provider]||AI_PRESETS.openai).label + ' · real replies' : 'Off · replies are offline until you add a key') + '</div></div>' +
+      '<div class="mini" style="margin-top:3px">' + (on ? 'Connected · ' + (AI_PRESETS[a.provider]||AI_PRESETS.xai).label + ' · real replies' : 'Off · offline replies until you add a Grok key') + '</div></div>' +
       '<span class="chip ' + (on ? 'mint' : '') + '">' + (on ? 'LIVE' : 'OFFLINE') + '</span></div>' +
     '<label class="mini">Provider</label>' +
     '<select id="aiProvider" class="input" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' + opts + '</select>' +
     '<label class="mini">API key (stored only on this device)</label>' +
-    '<input id="aiKey" class="input" type="password" placeholder="sk-…" value="' + esc(a.key || '') + '" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' +
+    '<input id="aiKey" class="input" type="password" placeholder="xai-… (Grok API key)" value="' + esc(a.key || '') + '" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' +
     '<label class="mini">Model (optional)</label>' +
-    '<input id="aiModel" class="input" placeholder="' + (AI_PRESETS[a.provider]||AI_PRESETS.openai).model + '" value="' + esc(a.model || '') + '" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' +
+    '<input id="aiModel" class="input" placeholder="' + (AI_PRESETS[a.provider]||AI_PRESETS.xai).model + '" value="' + esc(a.model || '') + '" style="width:100%;margin:5px 0 10px;padding:11px 13px;border-radius:13px;border:1px solid var(--line-2);background:var(--card-2);color:var(--ink);font:inherit">' +
     '<div class="row" style="gap:8px">' +
       '<button class="btn sm" style="flex:1;justify-content:center" data-act="saveAi">Save key</button>' +
       '<button class="btn sm soft" style="flex:1;justify-content:center" data-act="clearAi">Remove</button>' +
@@ -1288,7 +1297,7 @@ function openSettings(){
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="exportJson">Export data</button>' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="resetAll">Reset app</button>' +
     '</div>' +
-    '<div class="mini" style="text-align:center;margin:10px 0 4px">Teamily · build v3 · liquid glass light</div>' +
+    '<div class="mini" style="text-align:center;margin:10px 0 4px">Teamily · build v4 · Grok ready</div>' +
     '<button class="btn block" data-act="closeModal">Close</button>');
 }
 
@@ -1375,7 +1384,7 @@ document.addEventListener('click', e => {
       break;
     }
     case 'clearAi': {
-      db.ai = {provider:'openai', key:'', model:''};
+      db.ai = {provider:'xai', key:'', model:''};
       save(); toast('Reverted to offline replies'); openSettings(); break;
     }
     case 'exportJson': exportJson(); break;
