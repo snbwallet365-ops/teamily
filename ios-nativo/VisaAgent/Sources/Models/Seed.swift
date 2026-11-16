@@ -5,34 +5,34 @@ extension Store {
         let now = Date()
 
         let agents: [Agent] = [
-            Agent(id: "a1", name: "Saudi & Gulf Visa Specialist", icon: "🕋", role: "Gulf visa specialist",
+            Agent(id: "a1", name: "Saudi & Gulf Visa Specialist", icon: "moon.stars.fill", role: "Gulf visa specialist",
                   summary: "Saudi, UAE, Qatar and Oman visit, Umrah and work visa files.",
                   skills: ["Visit visa", "Umrah", "Work permit"], tint: 0, pinned: true),
-            Agent(id: "a2", name: "Schengen Visa Specialist", icon: "🇪🇺", role: "Schengen advisor",
+            Agent(id: "a2", name: "Schengen Visa Specialist", icon: "globe.europe.africa.fill", role: "Schengen advisor",
                   summary: "Short stay Schengen files, insurance, itinerary and consulate choice.",
                   skills: ["Schengen", "Insurance", "Itinerary"], tint: 1, pinned: true),
-            Agent(id: "a3", name: "UK & Ireland Advisor", icon: "🇬🇧", role: "UK visa advisor",
+            Agent(id: "a3", name: "UK & Ireland Advisor", icon: "crown.fill", role: "UK visa advisor",
                   summary: "Standard visitor, student and spouse routes with document proof.",
                   skills: ["Visitor", "Student", "Spouse"], tint: 2, pinned: false),
-            Agent(id: "a4", name: "Canada & US Advisor", icon: "🇨🇦", role: "North America advisor",
+            Agent(id: "a4", name: "Canada & US Advisor", icon: "shield.lefthalf.filled", role: "North America advisor",
                   summary: "Visitor visas, DS-160 support, invitation letters and interview prep.",
                   skills: ["DS-160", "Invitation", "Interview"], tint: 3, pinned: false),
-            Agent(id: "a5", name: "Australia & NZ Advisor", icon: "🇦🇺", role: "Oceania advisor",
+            Agent(id: "a5", name: "Australia & NZ Advisor", icon: "airplane", role: "Oceania advisor",
                   summary: "Subclass 600 files, funds evidence, health insurance and timelines.",
                   skills: ["Subclass 600", "Funds", "Insurance"], tint: 4, pinned: false),
-            Agent(id: "a6", name: "Document Checklist Agent", icon: "📋", role: "Checklist builder",
+            Agent(id: "a6", name: "Document Checklist Agent", icon: "checklist", role: "Checklist builder",
                   summary: "Builds the exact document list per country and purpose.",
                   skills: ["Checklists", "Verification"], tint: 5, pinned: true),
-            Agent(id: "a7", name: "Cover Letter Writer", icon: "✍️", role: "Letter specialist",
+            Agent(id: "a7", name: "Cover Letter Writer", icon: "square.and.pencil", role: "Letter specialist",
                   summary: "One page cover letters for family, business and tourist files.",
                   skills: ["Cover letter", "Affidavit"], tint: 0, pinned: false),
-            Agent(id: "a8", name: "Appointment & Biometrics Agent", icon: "📅", role: "Slot tracker",
+            Agent(id: "a8", name: "Appointment & Biometrics Agent", icon: "calendar", role: "Slot tracker",
                   summary: "Embassy slots, biometrics centres and deadline tracking.",
                   skills: ["Slots", "VFS", "Deadlines"], tint: 1, pinned: false),
-            Agent(id: "a9", name: "Interview Coach", icon: "🎤", role: "Mock interview coach",
+            Agent(id: "a9", name: "Interview Coach", icon: "mic.fill", role: "Mock interview coach",
                   summary: "Runs mock interviews and scores the ten most common questions.",
                   skills: ["Mock", "Scoring", "Confidence"], tint: 2, pinned: false),
-            Agent(id: "a10", name: "Compliance Reviewer", icon: "🛡️", role: "File reviewer",
+            Agent(id: "a10", name: "Compliance Reviewer", icon: "checkmark.shield.fill", role: "File reviewer",
                   summary: "Checks a finished file for missing pages, mismatch and refusal risks.",
                   skills: ["Audit", "Risk", "Refusal"], tint: 3, pinned: false)
         ]
@@ -53,13 +53,13 @@ extension Store {
         ]
 
         let teams: [Team] = [
-            Team(id: "t1", name: "Saudi Umrah Case Team", icon: "🕋",
+            Team(id: "t1", name: "Saudi Umrah Case Team", icon: "moon.stars.fill",
                  summary: "Saudi specialist, checklist and appointment tracking for Umrah files.",
                  memberIDs: ["a1", "a6", "a8"]),
-            Team(id: "t2", name: "Schengen Family Trip", icon: "🇪🇺",
+            Team(id: "t2", name: "Schengen Family Trip", icon: "globe.europe.africa.fill",
                  summary: "Four applicants, one itinerary, one insurance policy.",
                  memberIDs: ["a2", "a6", "a9"]),
-            Team(id: "t3", name: "Client Onboarding", icon: "🤝",
+            Team(id: "t3", name: "Client Onboarding", icon: "person.2.fill",
                  summary: "First contact to signed file, letters and compliance included.",
                  memberIDs: ["a1", "a7", "a10"])
         ]
@@ -84,13 +84,13 @@ extension Store {
         ]
 
         let artifacts: [ArtifactItem] = [
-            ArtifactItem(id: "r1", icon: "📋", title: "Saudi visit visa checklist",
+            ArtifactItem(id: "r1", icon: "checklist", title: "Saudi visit visa checklist",
                          body: "Passport valid 6+ months, two blank pages\nWhite background photos 35x45mm\nConfirmed return ticket\nHotel or host booking\nBank statement under 30 days\nNID copy\nCover letter",
                          at: now.addingTimeInterval(-86400)),
-            ArtifactItem(id: "r2", icon: "✍️", title: "UK visitor cover letter",
+            ArtifactItem(id: "r2", icon: "square.and.pencil", title: "UK visitor cover letter",
                          body: "To the Entry Clearance Officer,\n\nI am travelling to the United Kingdom from 4 to 18 January to visit my sister. I will stay at her address in Manchester, and she will provide accommodation. I fund the trip myself from savings of GBP 6,400 held at my bank, statement attached. I run a trading business in Dhaka and will return to my family on 19 January.\n\nYours faithfully,\nMd Rahman",
                          at: now.addingTimeInterval(-172800)),
-            ArtifactItem(id: "r3", icon: "🛡️", title: "Schengen file audit",
+            ArtifactItem(id: "r3", icon: "checkmark.shield.fill", title: "Schengen file audit",
                          body: "Files checked 4\nComplete 2\nMissing insurance 1\nStatement too old 1\nRecommendation: refresh statements before booking biometrics.",
                          at: now.addingTimeInterval(-259200))
         ]

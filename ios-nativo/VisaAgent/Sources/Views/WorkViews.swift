@@ -60,10 +60,10 @@ struct DiscoverView: View {
     @EnvironmentObject private var store: Store
 
     private let catalog: [DiscoverPick] = [
-        DiscoverPick(id: "tr", icon: "🇹🇷", blurb: "Tourist and business files for Türkiye.", skills: ["Tourist", "e-Visa"]),
-        DiscoverPick(id: "my", icon: "🇲🇾", blurb: "Short visit and work pass routes.", skills: ["Visit", "Work pass"]),
-        DiscoverPick(id: "jp", icon: "🇯🇵", blurb: "Itinerary heavy files with guarantee letters.", skills: ["Itinerary", "Guarantee"]),
-        DiscoverPick(id: "tr2", icon: "📑", blurb: "Certified translation and attestation guidance.", skills: ["Translation", "Attestation"])
+        DiscoverPick(id: "tr", icon: "globe.asia.australia.fill", blurb: "Tourist and business files for Türkiye.", skills: ["Tourist", "e-Visa"]),
+        DiscoverPick(id: "my", icon: "globe.asia.australia.fill", blurb: "Short visit and work pass routes.", skills: ["Visit", "Work pass"]),
+        DiscoverPick(id: "jp", icon: "globe.asia.australia.fill", blurb: "Itinerary heavy files with guarantee letters.", skills: ["Itinerary", "Guarantee"]),
+        DiscoverPick(id: "tr2", icon: "doc.on.doc.fill", blurb: "Certified translation and attestation guidance.", skills: ["Translation", "Attestation"])
     ]
 
     private var names: [String: String] {
@@ -80,7 +80,7 @@ struct DiscoverView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 15, style: .continuous)
                             .fill(Theme.wash(Theme.cyan))
-                        Text(item.icon).font(.system(size: 20))
+                        Image(systemName: item.icon).font(.system(size: 20, weight: .semibold)).foregroundColor(Theme.violet)
                     }
                     .frame(width: 46, height: 46)
 
@@ -229,7 +229,7 @@ struct ArtifactsView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
                                 .fill(Theme.wash(Theme.pink))
-                            Text(item.icon).font(.system(size: 19))
+                            Image(systemName: item.icon).font(.system(size: 19, weight: .semibold)).foregroundColor(Theme.violet)
                         }
                         .frame(width: 44, height: 44)
 

@@ -39,7 +39,7 @@ struct AgentsView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(Theme.wash(Theme.tint(agent.tint)))
-                Text(agent.icon).font(.system(size: 22))
+                Image(systemName: agent.icon).font(.system(size: 22, weight: .semibold)).foregroundColor(Theme.violet)
             }
             .frame(width: 50, height: 50)
 
@@ -91,7 +91,7 @@ struct TeamsView: View {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15, style: .continuous)
                                 .fill(Theme.wash(Theme.violet))
-                            Text(team.icon).font(.system(size: 20))
+                            Image(systemName: team.icon).font(.system(size: 20, weight: .semibold)).foregroundColor(Theme.violet)
                         }
                         .frame(width: 46, height: 46)
                         VStack(alignment: .leading, spacing: 3) {
@@ -109,8 +109,8 @@ struct TeamsView: View {
                         ForEach(team.memberIDs.prefix(5), id: \.self) { memberID in
                             ZStack {
                                 Circle().fill(Color.white)
-                                Text(store.agent(memberID)?.icon ?? "🛂")
-                                    .font(.system(size: 15))
+                                Image(systemName: store.agent(memberID)?.icon ?? "person.text.rectangle.fill")
+                                    .font(.system(size: 15)).foregroundColor(Theme.violet)
                             }
                             .frame(width: 30, height: 30)
                             .overlay(Circle().stroke(Color.white, lineWidth: 2))

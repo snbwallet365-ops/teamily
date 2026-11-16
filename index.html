@@ -189,6 +189,19 @@
   .artcard span{font-size:11.2px;color:var(--dimmer);font-weight:600}
   .artcard:active{transform:scale(.98)}
 
+  /* ---------- premium icon system ---------- */
+  .ic{width:20px;height:20px;display:inline-block;vertical-align:-4px;flex:0 0 auto;
+      fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .face .ic{width:23px;height:23px;stroke-width:1.9}
+  .face.sm .ic{width:19px;height:19px}
+  .face.xs .ic{width:14px;height:14px;stroke-width:2}
+  .artcard .ico .ic{width:24px;height:24px}
+  .tapicon .ic{width:16px;height:16px}
+  .btn .ic{width:16px;height:16px;vertical-align:-3px;margin-right:2px}
+  .mag .ic{width:17px;height:17px;color:var(--dimmer)}
+  h3 .ic{width:20px;height:20px;vertical-align:-3px;margin-right:6px;color:var(--violet)}
+  .segnav .ic,.dock .ic{width:18px;height:18px}
+  .icon-btn .ic{width:19px;height:19px;vertical-align:0}
   /* ---------- iOS top navigation bar ---------- */
   header.top{transition:padding .28s ease}
   header.top.compact{align-items:center;padding:2px 4px 6px}
@@ -317,6 +330,41 @@
 </style>
 </head>
 <body>
+<svg id="ic-sprite" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+<defs>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.2l2.3 5.6 5.6 2.3-5.6 2.3L12 19.6l-2.3-6.2L4.1 11.1l5.6-2.3L12 3.2z"/><circle cx="18.6" cy="5.4" r="1.1" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-moonstar" viewBox="0 0 24 24"><path d="M19.8 14.4a8.4 8.4 0 1 1-9.9-10 6.9 6.9 0 0 0 9.9 10z"/><path d="M18 2.6l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3c2.8 3.4 2.8 14.6 0 18-2.8-3.4-2.8-14.6 0-18z"/></symbol>
+<symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8.2l4.2 3.1L12 5l4.8 6.3L21 8.2l-1.9 10.6H4.9L3 8.2z"/><path d="M5.4 21h13.2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2l7.2 2.9v5.6c0 4.6-3 7.8-7.2 9.3-4.2-1.5-7.2-4.7-7.2-9.3V6.1L12 3.2z"/></symbol>
+<symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3.2l7.2 2.9v5.6c0 4.6-3 7.8-7.2 9.3-4.2-1.5-7.2-4.7-7.2-9.3V6.1L12 3.2z"/><path d="M8.9 11.9l2.2 2.2 4-4.2"/></symbol>
+<symbol id="i-plane" viewBox="0 0 24 24"><path d="M21 3.6L10.4 14.2"/><path d="M21 3.6l-6.9 17.6-3.7-6.8-6.8-3.7L21 3.6z"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h6.6L18.5 8v13H7V3z"/><path d="M13.4 3v5.2h5.1"/><path d="M10 13h5.6M10 16.6h4"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4.2-1L20 7.2l-3.2-3.2L5 15.8 4 20z"/><path d="M14.9 5.1l3.2 3.2"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.2" y="5.2" width="17.6" height="15.6" rx="3.2"/><path d="M8 3.2v4M16 3.2v4M3.2 10.2h17.6"/><circle cx="12" cy="15.2" r="1.5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9.2" y="3" width="5.6" height="11" rx="2.8"/><path d="M6 11.8a6 6 0 0 0 12 0"/><path d="M12 18v3"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.2" cy="8.4" r="3.3"/><path d="M3.2 20a6 6 0 0 1 12 0"/><path d="M16.2 5.6a3 3 0 0 1 0 5.7"/><path d="M18.8 20a5.6 5.6 0 0 0-3.1-5"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7.6" width="18" height="12.6" rx="3"/><path d="M9 7.6V5.4A2.4 2.4 0 0 1 11.4 3h1.2A2.4 2.4 0 0 1 15 5.4v2.2"/><path d="M3 12.4h18"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4.6h6.4A2.6 2.6 0 0 1 13 7.2V20a2.4 2.4 0 0 0-2.4-2.4H4V4.6z"/><path d="M20 4.6h-6.4A2.6 2.6 0 0 0 11 7.2V20a2.4 2.4 0 0 1 2.4-2.4H20V4.6z"/></symbol>
+<symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5"/><path d="M6.6 8h10.8v2.8a5.4 5.4 0 0 1-10.8 0V8z"/><path d="M12 16.2V21"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.8"/><path d="M16.2 16.2L21 21"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.8"/><path d="M15.6 8.4l-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M20.8 12a8 8 0 0 1-11.6 7.2L4.2 20.8l1.7-4.9A8 8 0 1 1 20.8 12z"/></symbol>
+<symbol id="i-robot" viewBox="0 0 24 24"><rect x="4.2" y="7.2" width="15.6" height="12" rx="4"/><path d="M12 3v4.2"/><circle cx="9.2" cy="13.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13.2" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.4 4.2a3 3 0 0 0-3 3 3.1 3.1 0 0 0-1.2 5.8 3 3 0 0 0 2.6 4.5 2.9 2.9 0 0 0 4.2 2.6V4.6a2.2 2.2 0 0 0-2.6-.4z"/><path d="M14.6 4.2a3 3 0 0 1 3 3 3.1 3.1 0 0 1 1.2 5.8 3 3 0 0 1-2.6 4.5 2.9 2.9 0 0 1-4.2 2.6"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3.2l8.6 4.6L12 12.4 3.4 7.8 12 3.2z"/><path d="M3.4 12.6L12 17.2l8.6-4.6"/><path d="M3.4 16.8L12 21.4l8.6-4.6"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.4v2.8M12 18.8v2.8M2.4 12h2.8M18.8 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.8 14.4a8.4 8.4 0 1 1-9.9-10 6.9 6.9 0 0 0 9.9 10z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.4 5.4l1.7 1.7M16.9 16.9l1.7 1.7M18.6 5.4l-1.7 1.7M7.1 16.9l-1.7 1.7"/></symbol>
+<symbol id="i-dots" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.2v13.6M5.2 12h13.6"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3.6L10.4 14.2"/><path d="M21 3.6l-6.9 17.6-3.7-6.8-6.8-3.7L21 3.6z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.6l4.6 4.6L19 6.8"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M3 10.2h18"/><path d="M6.6 14.6h3.2"/></symbol>
+</svg>
+
 <div class="bg"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
 
 <div class="app">
@@ -332,20 +380,20 @@
       <p class="sub" id="pageSub">8 agents online</p>
     </div>
     <div class="actions">
-      <button class="icon-btn" data-act="theme" id="themeBtn" title="Theme">☾</button>
-      <button class="icon-btn" data-act="settings" title="Settings">⚙</button>
+      <button class="icon-btn" data-act="theme" id="themeBtn" title="Theme"><svg class="ic"><use href="#i-moon"></use></svg></button>
+      <button class="icon-btn" data-act="settings" title="Settings"><svg class="ic"><use href="#i-gear"></use></svg></button>
     </div>
   </header>
 
   <div class="topnav" id="topnav">
     <div class="segnav" id="segNav">
-      <button data-act="nav" data-view="chats" class="on"><span class="g">◌</span>Chats</button>
-      <button data-act="nav" data-view="agents"><span class="g">◉</span>Agents</button>
+      <button data-act="nav" data-view="chats" class="on"><span class="g"><svg class="ic"><use href="#i-chat"></use></svg></span>Chats</button>
+      <button data-act="nav" data-view="agents"><span class="g"><svg class="ic"><use href="#i-robot"></use></svg></span>Agents</button>
       <button data-act="nav" data-view="teams"><span class="g">◎</span>Teams</button>
       <button data-act="nav" data-view="automations"><span class="g">⚡</span>Automations</button>
-      <button data-act="nav" data-view="discover"><span class="g">◈</span>Discover</button>
-      <button data-act="nav" data-view="memory"><span class="g">▤</span>Memory</button>
-      <button data-act="nav" data-view="artifacts"><span class="g">▣</span>Artifacts</button>
+      <button data-act="nav" data-view="discover"><span class="g"><svg class="ic"><use href="#i-compass"></use></svg></span>Discover</button>
+      <button data-act="nav" data-view="memory"><span class="g"><svg class="ic"><use href="#i-brain"></use></svg></span>Memory</button>
+      <button data-act="nav" data-view="artifacts"><span class="g"><svg class="ic"><use href="#i-layers"></use></svg></span>Artifacts</button>
     </div>
   </div>
 
@@ -353,28 +401,28 @@
 </div>
 
 <nav class="dock">
-  <button data-act="nav" data-view="chats" class="on"><span class="g">◌</span>Chats</button>
-  <button data-act="nav" data-view="agents"><span class="g">◉</span>Agents</button>
-  <button data-act="nav" data-view="discover"><span class="g">◈</span>Discover</button>
-  <button data-act="nav" data-view="memory"><span class="g">▤</span>Memory</button>
-  <button data-act="nav" data-view="artifacts"><span class="g">▣</span>Artifacts</button>
+  <button data-act="nav" data-view="chats" class="on"><span class="g"><svg class="ic"><use href="#i-chat"></use></svg></span>Chats</button>
+  <button data-act="nav" data-view="agents"><span class="g"><svg class="ic"><use href="#i-robot"></use></svg></span>Agents</button>
+  <button data-act="nav" data-view="discover"><span class="g"><svg class="ic"><use href="#i-compass"></use></svg></span>Discover</button>
+  <button data-act="nav" data-view="memory"><span class="g"><svg class="ic"><use href="#i-brain"></use></svg></span>Memory</button>
+  <button data-act="nav" data-view="artifacts"><span class="g"><svg class="ic"><use href="#i-layers"></use></svg></span>Artifacts</button>
 </nav>
 
 <div class="sheet" id="chatSheet">
   <div class="grab"></div>
   <div class="sheet-head">
-    <div class="face sm" id="sheetFace">✦</div>
+    <div class="face sm" id="sheetFace"></div>
     <div class="grow">
       <h3 id="sheetName">Agent</h3>
       <div class="st"><b></b><span id="sheetRole">online · replies instantly</span></div>
     </div>
-    <button class="icon-btn" data-act="closeChat" title="Close">✕</button>
+    <button class="icon-btn" data-act="closeChat" title="Close"><svg class="ic"><use href="#i-x"></use></svg></button>
   </div>
   <div class="msgs" id="msgs"></div>
   <div class="quick" id="quick"></div>
   <div class="composer">
     <input id="msgInput" placeholder="Message your agent…" autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}">
-    <button class="send" data-act="send" title="Send">↑</button>
+    <button class="send" data-act="send" title="Send"><svg class="ic"><use href="#i-send"></use></svg></button>
   </div>
 </div>
 
@@ -386,7 +434,7 @@
 
 <script>
 /* ================= data ================= */
-const KEY = 'visaagent.v1';
+const KEY = 'visaagent.v2';
 const GRADS = [
   'linear-gradient(135deg,#7c5cff,#5b8bff)',
   'linear-gradient(135deg,#ff7ab8,#ff9d5c)',
@@ -400,47 +448,47 @@ const GRADS = [
 
 function seedData(){
   const agents = [
-    {id:'a9', name:'Grok · Visa Case Manager', icon:'\u2726', role:'Grok powered case manager', g:2, pinned:true,
+    {id:'a9', name:'Grok · Visa Case Manager', icon:'sparkle', role:'Grok powered case manager', g:2, pinned:true,
       desc:'Runs the whole file: reads documents, flags gaps, keeps the timeline and hands work to specialists.',
       skills:['Grok','Case review','Timeline']},
-    {id:'a1', name:'Saudi & Gulf Visa Specialist', icon:'\ud83d\udd4b', role:'Gulf visa specialist', g:0, pinned:true,
+    {id:'a1', name:'Saudi & Gulf Visa Specialist', icon:'moonstar', role:'Gulf visa specialist', g:0, pinned:true,
       desc:'Saudi, UAE, Qatar and Oman visit, Umrah and work visa files with embassy rules.',
       skills:['Visit visa','Umrah','Work permit']},
-    {id:'a2', name:'Schengen Visa Specialist', icon:'\ud83c\uddea\ud83c\uddfa', role:'Schengen advisor', g:1, pinned:true,
+    {id:'a2', name:'Schengen Visa Specialist', icon:'globe', role:'Schengen advisor', g:1, pinned:true,
       desc:'Short stay files, insurance, itinerary and choosing the right consulate.',
       skills:['Schengen','Insurance','Itinerary']},
-    {id:'a3', name:'UK & Ireland Advisor', icon:'\ud83c\uddec\ud83c\udde7', role:'UK visa advisor', g:3, pinned:false,
+    {id:'a3', name:'UK & Ireland Advisor', icon:'crown', role:'UK visa advisor', g:3, pinned:false,
       desc:'Visitor, student and spouse routes with the exact evidence officers look for.',
       skills:['Visitor','Student','Spouse']},
-    {id:'a4', name:'Canada & US Advisor', icon:'\ud83c\udde8\ud83c\udde6', role:'North America advisor', g:4, pinned:false,
+    {id:'a4', name:'Canada & US Advisor', icon:'shield', role:'North America advisor', g:4, pinned:false,
       desc:'Visitor files, DS-160 support, invitation letters and interview preparation.',
       skills:['DS-160','Invitation','Interview']},
-    {id:'a5', name:'Australia & NZ Advisor', icon:'\ud83c\udde6\ud83c\uddfa', role:'Oceania advisor', g:5, pinned:false,
+    {id:'a5', name:'Australia & NZ Advisor', icon:'plane', role:'Oceania advisor', g:5, pinned:false,
       desc:'Subclass 600 files, funds evidence, health insurance and real timelines.',
       skills:['Subclass 600','Funds','Insurance']},
-    {id:'a6', name:'Document Checklist Agent', icon:'\ud83d\udccb', role:'Checklist builder', g:6, pinned:true,
+    {id:'a6', name:'Document Checklist Agent', icon:'doc', role:'Checklist builder', g:6, pinned:true,
       desc:'Builds the exact document list per country and purpose, then audits what is missing.',
       skills:['Checklists','Audit','Verification']},
-    {id:'a7', name:'Cover Letter Writer', icon:'\u270d\ufe0f', role:'Letter specialist', g:7, pinned:false,
+    {id:'a7', name:'Cover Letter Writer', icon:'pen', role:'Letter specialist', g:7, pinned:false,
       desc:'One page cover letters for family, business and tourist files, plus affidavits.',
       skills:['Cover letter','Affidavit']},
-    {id:'a8', name:'Appointment & Biometrics Agent', icon:'\ud83d\udcc5', role:'Slot tracker', g:0, pinned:false,
+    {id:'a8', name:'Appointment & Biometrics Agent', icon:'calendar', role:'Slot tracker', g:0, pinned:false,
       desc:'Embassy slots, VFS centres, biometrics and deadline tracking per applicant.',
       skills:['Slots','VFS','Deadlines']},
-    {id:'a10', name:'Interview Coach', icon:'\ud83c\udfa4', role:'Mock interview coach', g:1, pinned:false,
+    {id:'a10', name:'Interview Coach', icon:'mic', role:'Mock interview coach', g:1, pinned:false,
       desc:'Runs mock interviews and scores answers to the ten most common questions.',
       skills:['Mock','Scoring','Confidence']},
-    {id:'a11', name:'Compliance Reviewer', icon:'\ud83d\udee1\ufe0f', role:'File reviewer', g:3, pinned:false,
+    {id:'a11', name:'Compliance Reviewer', icon:'shieldcheck', role:'File reviewer', g:3, pinned:false,
       desc:'Checks a finished file for missing pages, mismatches and refusal risk.',
       skills:['Audit','Risk','Refusal']}
   ];
 
   const teams = [
-    {id:'t1', name:'Saudi Umrah Case Team', icon:'\ud83d\udd4b', g:0, members:['a1','a6','a8'],
+    {id:'t1', name:'Saudi Umrah Case Team', icon:'moonstar', g:0, members:['a1','a6','a8'],
       desc:'Saudi specialist, checklist and appointment tracking for Umrah files.'},
-    {id:'t2', name:'Schengen Family Trip', icon:'\ud83c\uddea\ud83c\uddfa', g:1, members:['a2','a6','a10'],
+    {id:'t2', name:'Schengen Family Trip', icon:'globe', g:1, members:['a2','a6','a10'],
       desc:'Four applicants, one itinerary, one insurance policy.'},
-    {id:'t3', name:'Client Onboarding', icon:'\ud83e\udd1d', g:3, members:['a11','a7','a9'],
+    {id:'t3', name:'Client Onboarding', icon:'users', g:3, members:['a11','a7','a9'],
       desc:'First contact to signed file, letters and compliance included.'}
   ];
 
@@ -485,13 +533,13 @@ function seedData(){
   ];
 
   const artifacts = [
-    {id:'ar1', icon:'\ud83d\udccb', name:'Saudi visa checklist', meta:'Updated 6m ago',
+    {id:'ar1', icon:'doc', name:'Saudi visa checklist', meta:'Updated 6m ago',
       body:'Passport valid 6+ months\nWhite background photos 35x45mm\nReturn ticket\nHotel or host booking\nBank statement under 30 days\nNID copy\nCover letter\n\nStatus: ready to send.'},
-    {id:'ar2', icon:'\u270d\ufe0f', name:'UK visitor cover letter', meta:'One page',
+    {id:'ar2', icon:'pen', name:'UK visitor cover letter', meta:'One page',
       body:'To the Entry Clearance Officer,\n\nI am travelling to the United Kingdom from 4 to 18 January to visit my sister in Manchester. She provides accommodation. I fund the trip from savings of GBP 6,400, statement attached. I run a trading business in Dhaka and return to my family on 19 January.\n\nYours faithfully,\nMd Rahman'},
-    {id:'ar3', icon:'\ud83d\udee1\ufe0f', name:'Schengen file audit', meta:'4 files',
+    {id:'ar3', icon:'shieldcheck', name:'Schengen file audit', meta:'4 files',
       body:'Files checked 4\nComplete 2\nMissing insurance 1\nStatement too old 1\n\nRecommendation: refresh statements before booking biometrics.'},
-    {id:'ar4', icon:'\ud83d\udcc5', name:'Biometrics plan', meta:'This week',
+    {id:'ar4', icon:'calendar', name:'Biometrics plan', meta:'This week',
       body:'Wednesday: VFS Dhaka, 10:20 slot, 4 applicants\nCarry: passport, appointment letter, photos, checklist copy\nArrive 15 minutes early, no electronics inside.'}
   ];
 
@@ -640,6 +688,16 @@ function replyFor(agentId, text){
   return 'Got it. As ' + name + ' I would start by breaking that into three concrete steps and doing the first one now. Shall I go ahead and save the result to Artifacts?';
 }
 
+/* ================= premium icons ================= */
+const ICON_KEYS = ['sparkle','moonstar','globe','crown','shield','shieldcheck','plane','doc','pen','calendar','mic','users','target','briefcase','book','plug','search','compass','chat','robot','brain','layers','gear','moon','sun','dots','plus','send','check','card'];
+const ICON_SET = new Set(ICON_KEYS);
+
+function ic(name, cls){
+  const key = String(name == null ? '' : name).trim();
+  if(!ICON_SET.has(key)) return key;            /* legacy emoji still renders */
+  return '<svg class="ic' + (cls ? ' ' + cls : '') + '" aria-hidden="true"><use href="#i-' + key + '"></use></svg>';
+}
+
 /* ================= chrome ================= */
 const TITLES = {
   chats:{t:'Chats', s:'Live agent conversations'},
@@ -653,7 +711,7 @@ const TITLES = {
 
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', db.ui.theme === 'dark' ? 'dark' : 'light');
-  document.getElementById('themeBtn').textContent = db.ui.theme === 'dark' ? '☀' : '☾';
+  document.getElementById('themeBtn').innerHTML = ic(db.ui.theme === 'dark' ? 'sun' : 'moon');
   const meta = document.querySelector('meta[name="theme-color"]');
   if(meta) meta.setAttribute('content', db.ui.theme === 'dark' ? '#080b14' : '#eef2fb');
 }
@@ -688,15 +746,15 @@ function uiView(){ return db.ui.view || 'chats'; }
 
 /* ================= views ================= */
 function agentFace(a, cls){
-  return '<div class="face ' + (cls||'') + '" style="background:' + grad(a.g) + '">' + a.icon + '</div>';
+  return '<div class="face ' + (cls||'') + '" style="background:' + grad(a.g) + '">' + ic(a.icon) + '</div>';
 }
 function chatTitle(c){
   if(c.kind === 'Team'){
     const t = byId(db.teams, c.ref);
-    return t ? {name:t.name, icon:t.icon, g:t.g} : {name:'Team', icon:'👥', g:0};
+    return t ? {name:t.name, icon:t.icon, g:t.g} : {name:'Team', icon:'users', g:0};
   }
   const a = byId(db.agents, c.ref);
-  return a ? {name:a.name, icon:a.icon, g:a.g} : {name:'Agent', icon:'✦', g:0};
+  return a ? {name:a.name, icon:a.icon, g:a.g} : {name:'Agent', icon:'sparkle', g:0};
 }
 
 function chatsList(){
@@ -712,7 +770,7 @@ function chatsList(){
     const t = chatTitle(c);
     const last = c.messages.length ? c.messages[c.messages.length-1].text : 'Start the conversation';
     return '<div class="chatrow card" data-act="openChat" data-id="' + c.id + '">' +
-      '<div class="face" style="background:' + grad(t.g) + '">' + t.icon + '</div>' +
+      '<div class="face" style="background:' + grad(t.g) + '">' + ic(t.icon) + '</div>' +
       '<div class="grow"><h4>' + esc(t.name) + (c.kind === 'Team' ? ' <span class="chip mint" style="font-size:9.6px;padding:2px 7px">TEAM</span>' : '') + '</h4>' +
       '<p>' + esc(last) + '</p></div>' +
       '<div style="text-align:right"><div class="time">' + relTime(c.updated) + '</div>' +
@@ -728,11 +786,11 @@ function renderChats(){
       '<h3>Your team is live</h3>' +
       '<p>' + db.agents.length + ' agents · ' + db.teams.length + ' teams · ' + running + ' automations running</p>' +
       '<div class="row">' +
-        '<button class="btn soft" data-act="newChat">＋ New chat</button>' +
+        '<button class="btn soft" data-act="newChat"><svg class="ic"><use href="#i-plus"></use></svg> New chat</button>' +
         '<button class="btn soft" data-act="nav" data-view="agents">Agents</button>' +
         '<button class="btn soft" data-act="nav" data-view="artifacts">Artifacts</button>' +
       '</div></div>' +
-    '<div class="search card"><span class="mag">⌕</span>' +
+    '<div class="search card"><span class="mag"><svg class="ic"><use href="#i-search"></use></svg></span>' +
       '<input data-search="q" placeholder="Search conversations" value="' + esc(db.ui.q || '') + '">' +
     '</div>' +
     '<div id="list-chats">' + chatsList() + '</div>';
@@ -743,7 +801,7 @@ function agentCard(a){
     '<div class="row">' + agentFace(a) +
       '<div class="grow"><h4>' + esc(a.name) + '</h4><p>' + esc(a.desc) + '</p></div>' +
       '<div class="row-actions">' +
-        '<button class="tapicon" data-act="agentMenu" data-id="' + a.id + '" title="More">⋯</button>' +
+        '<button class="tapicon" data-act="agentMenu" data-id="' + a.id + '" title="More"><svg class="ic"><use href="#i-dots"></use></svg></button>' +
       '</div></div>' +
     '<div class="chips">' + a.skills.map(s => '<span class="chip">' + esc(s) + '</span>').join('') + '</div>' +
     '<div class="row" style="margin-top:12px;gap:8px">' +
@@ -757,13 +815,13 @@ function teamsList(){
   return db.teams.map(t => {
     const members = t.members.map(id => byId(db.agents, id)).filter(Boolean);
     return '<div class="card" style="padding:15px;margin-bottom:11px">' +
-      '<div class="row"><div class="face" style="background:' + grad(t.g) + '">' + t.icon + '</div>' +
+      '<div class="row"><div class="face" style="background:' + grad(t.g) + '">' + ic(t.icon) + '</div>' +
       '<div class="grow"><h4 style="margin:0 0 3px;font-size:15px">' + esc(t.name) + '</h4>' +
       '<p style="margin:0;font-size:12.4px;color:var(--dim);line-height:1.5">' + esc(t.desc) + '</p></div></div>' +
       '<div class="row" style="margin-top:11px">' +
-        members.slice(0,5).map(m => '<div class="face xs" style="background:' + grad(m.g) + '" title="' + esc(m.name) + '">' + m.icon + '</div>').join('') +
+        members.slice(0,5).map(m => '<div class="face xs" style="background:' + grad(m.g) + '" title="' + esc(m.name) + '">' + ic(m.icon) + '</div>').join('') +
         '<span class="mini" style="margin-left:6px">' + members.length + ' agents</span>' +
-        '<button class="tapicon" style="margin-left:auto" data-act="teamMenu" data-id="' + t.id + '">⋯</button>' +
+        '<button class="tapicon" style="margin-left:auto" data-act="teamMenu" data-id="' + t.id + '"><svg class="ic"><use href="#i-dots"></use></svg></button>' +
       '</div>' +
       '<button class="btn sm block" style="margin-top:11px" data-act="openTeam" data-id="' + t.id + '">Open team chat</button>' +
     '</div>';
@@ -778,13 +836,13 @@ function autosList(){
       '<div class="row">' +
         '<div class="grow"><b style="font-size:14px">' + esc(a.name) + '</b>' +
         '<div style="font-size:12.3px;color:var(--dim);margin-top:3px">' + esc(a.when) + '</div>' +
-        '<div class="mini" style="margin-top:6px">' + (ag ? ag.icon + ' ' + esc(ag.name) : 'No agent') + ' · last run ' + esc(a.last || 'never') + '</div>' +
+        '<div class="mini" style="margin-top:6px">' + (ag ? ic(ag.icon) + ' ' + esc(ag.name) : 'No agent') + ' · last run ' + esc(a.last || 'never') + '</div>' +
         '</div>' +
         '<button class="sw ' + (a.on ? 'on' : '') + '" data-act="toggleAuto" data-id="' + a.id + '" aria-label="Toggle"><i></i></button>' +
       '</div>' +
       '<div class="row" style="margin-top:11px;gap:7px">' +
         '<button class="btn sm mint" data-act="runAuto" data-id="' + a.id + '">▶ Run now</button>' +
-        '<button class="btn sm soft" data-act="autoMenu" data-id="' + a.id + '">⋯</button>' +
+        '<button class="btn sm soft" data-act="autoMenu" data-id="' + a.id + '"><svg class="ic"><use href="#i-dots"></use></svg></button>' +
       '</div></div>';
   }).join('');
 }
@@ -798,16 +856,16 @@ function renderAgents(){
         '<div class="stat card"><b>' + db.teams.length + '</b><span>Teams</span></div>' +
         '<div class="stat card"><b>' + db.automations.filter(x => x.on).length + '</b><span>Live</span></div>' +
       '</div>' +
-      '<div class="search card"><span class="mag">⌕</span><input data-search="q" placeholder="Search agents" value="' + esc(db.ui.q || '') + '"></div>' +
+      '<div class="search card"><span class="mag"><svg class="ic"><use href="#i-search"></use></svg></span><input data-search="q" placeholder="Search agents" value="' + esc(db.ui.q || '') + '"></div>' +
       '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Your agents</span>' +
-        '<button class="btn sm" data-act="newAgent">＋ New agent</button></div>' +
+        '<button class="btn sm" data-act="newAgent"><svg class="ic"><use href="#i-plus"></use></svg> New agent</button></div>' +
       '<div id="list-agents">' + (list.length ? list.map(agentCard).join('') : '<div class="empty">No agents match that search.</div>') + '</div>';
   return body;
 }
 
 function renderTeams(){
   return '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Agent teams</span>' +
-    '<button class="btn sm pink" data-act="newTeam">＋ New team</button></div>' +
+    '<button class="btn sm pink" data-act="newTeam"><svg class="ic"><use href="#i-plus"></use></svg> New team</button></div>' +
     '<div id="list-teams">' + teamsList() + '</div>' +
     '<div class="card" style="padding:15px;margin-top:6px;border-radius:20px">' +
       '<b style="font-size:13.6px">How teams work</b>' +
@@ -823,7 +881,7 @@ function renderAutomations(){
       '<div class="stat card"><b>' + (db.automations.length - live) + '</b><span>Paused</span></div>' +
     '</div>' +
     '<div class="row" style="margin-bottom:12px"><span class="sec" style="margin:0;flex:1">Scheduled work</span>' +
-    '<button class="btn sm mint" data-act="newAuto">＋ New</button></div>' +
+    '<button class="btn sm mint" data-act="newAuto"><svg class="ic"><use href="#i-plus"></use></svg> New</button></div>' +
     '<div id="list-autos">' + autosList() + '</div>';
 }
 
@@ -831,12 +889,12 @@ function renderDiscover(){
   const cats = ['All','Content','Design','Code','Business','Education','Travel'];
   const cat = db.ui.cat || 'All';
   const pool = [
-    {id:'d1', name:'SEO Writer', icon:'🔎', role:'Search content', g:3, desc:'Rank focused articles, briefs and internal linking plans.', skills:['SEO','Briefs'], cat:'Content'},
-    {id:'d2', name:'Brand Designer', icon:'🎯', role:'Identity design', g:5, desc:'Logo systems, palettes and brand guidelines.', skills:['Identity','Palette'], cat:'Design'},
-    {id:'d3', name:'API Builder', icon:'🔌', role:'Backend', g:2, desc:'REST endpoints, schemas and integration wiring.', skills:['API','Schema'], cat:'Code'},
-    {id:'d4', name:'Sales Closer', icon:'💼', role:'Deal support', g:4, desc:'Objection handling, follow-up sequences and scripts.', skills:['Scripts','Follow-up'], cat:'Business'},
-    {id:'d5', name:'Exam Coach', icon:'📘', role:'Test prep', g:6, desc:'Study plans, mock tests and weak spot drills.', skills:['IELTS','Plan'], cat:'Education'},
-    {id:'d6', name:'Travel Planner', icon:'🧭', role:'Trip design', g:7, desc:'Routes, budgets and day by day itineraries.', skills:['Itinerary','Budget'], cat:'Travel'}
+    {id:'d1', name:'SEO Writer', icon:'search', role:'Search content', g:3, desc:'Rank focused articles, briefs and internal linking plans.', skills:['SEO','Briefs'], cat:'Content'},
+    {id:'d2', name:'Brand Designer', icon:'target', role:'Identity design', g:5, desc:'Logo systems, palettes and brand guidelines.', skills:['Identity','Palette'], cat:'Design'},
+    {id:'d3', name:'API Builder', icon:'plug', role:'Backend', g:2, desc:'REST endpoints, schemas and integration wiring.', skills:['API','Schema'], cat:'Code'},
+    {id:'d4', name:'Sales Closer', icon:'briefcase', role:'Deal support', g:4, desc:'Objection handling, follow-up sequences and scripts.', skills:['Scripts','Follow-up'], cat:'Business'},
+    {id:'d5', name:'Exam Coach', icon:'book', role:'Test prep', g:6, desc:'Study plans, mock tests and weak spot drills.', skills:['IELTS','Plan'], cat:'Education'},
+    {id:'d6', name:'Travel Planner', icon:'compass', role:'Trip design', g:7, desc:'Routes, budgets and day by day itineraries.', skills:['Itinerary','Budget'], cat:'Travel'}
   ];
   const list = pool.filter(p => cat === 'All' || p.cat === cat);
   return '<div class="sec" style="margin-top:2px">Categories</div>' +
@@ -848,28 +906,28 @@ function renderDiscover(){
           '<div class="grow"><h4>' + esc(p.name) + '</h4><p>' + esc(p.desc) + '</p></div></div>' +
         '<div class="chips">' + p.skills.map(s => '<span class="chip">' + esc(s) + '</span>').join('') + '</div>' +
         '<div class="row" style="margin-top:12px;gap:8px">' +
-          '<button class="btn sm" data-act="adopt" data-id="' + p.id + '">＋ Add to my agents</button>' +
+          '<button class="btn sm" data-act="adopt" data-id="' + p.id + '"><svg class="ic"><use href="#i-plus"></use></svg> Add to my agents</button>' +
           '<button class="btn sm soft" data-act="tryAgent" data-id="' + p.id + '">Try chat</button>' +
         '</div></div>').join('');
 }
 
 function renderMemory(){
   return '<div class="row" style="margin-bottom:10px"><span class="sec" style="margin:0;flex:1">Long term memory</span>' +
-    '<button class="btn sm" data-act="newMemory">＋ Add</button></div>' +
+    '<button class="btn sm" data-act="newMemory"><svg class="ic"><use href="#i-plus"></use></svg> Add</button></div>' +
     (db.memories.length ? db.memories.map(m =>
       '<div class="card" style="padding:14px 15px;margin-bottom:10px">' +
         '<div class="row"><b style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--dimmer);flex:1">' + esc(m.k) + '</b>' +
-        '<button class="tapicon" data-act="memMenu" data-id="' + m.id + '">⋯</button></div>' +
+        '<button class="tapicon" data-act="memMenu" data-id="' + m.id + '"><svg class="ic"><use href="#i-dots"></use></svg></button></div>' +
         '<div style="font-size:14px;line-height:1.55;margin-top:6px">' + esc(m.v) + '</div></div>').join('')
       : '<div class="empty">No memory yet. Add the first fact your team should remember.</div>');
 }
 
 function renderArtifacts(){
   return '<div class="row" style="margin-bottom:10px"><span class="sec" style="margin:0;flex:1">Saved outputs</span>' +
-    '<button class="btn sm pink" data-act="newArtifact">＋ New</button></div>' +
+    '<button class="btn sm pink" data-act="newArtifact"><svg class="ic"><use href="#i-plus"></use></svg> New</button></div>' +
     (db.artifacts.length ? '<div class="artgrid">' + db.artifacts.map(a =>
       '<div class="artcard card" data-act="openArtifact" data-id="' + a.id + '">' +
-        '<div class="ico">' + a.icon + '</div>' +
+        '<div class="ico">' + ic(a.icon) + '</div>' +
         '<div><b>' + esc(a.name) + '</b><div style="margin-top:4px"><span>' + esc(a.meta) + '</span></div></div>' +
       '</div>').join('') + '</div>'
       : '<div class="empty">Nothing saved yet. Artifacts appear here when an agent finishes work.</div>');
@@ -928,7 +986,7 @@ function openChat(chatId){
   c.unread = 0;
   save();
   const t = chatTitle(c);
-  document.getElementById('sheetFace').textContent = t.icon;
+  document.getElementById('sheetFace').innerHTML = ic(t.icon);
   document.getElementById('sheetFace').style.background = grad(t.g);
   document.getElementById('sheetName').textContent = t.name;
   document.getElementById('sheetRole').textContent = c.kind === 'Team'
@@ -1030,7 +1088,7 @@ function autoArtifact(agentId, text){
   const a = byId(db.agents, agentId);
   db.artifacts.unshift({
     id: uid('ar'),
-    icon: a ? a.icon : '✦',
+    icon: a ? a.icon : 'sparkle',
     name: (a ? a.name : 'Agent') + ' output',
     meta: 'Just now',
     body: 'Request: ' + text + '\n\nSaved automatically from the conversation. Open to review, copy or share with the team.'
@@ -1142,7 +1200,7 @@ function newAgentForm(){
     submit:'Create agent',
     onSave:v => {
       db.agents.push({
-        id:uid('a'), name:v.name, icon:v.icon || '✦', role:'Custom agent',
+        id:uid('a'), name:v.name, icon:v.icon || 'sparkle', role:'Custom agent',
         g:Math.floor(Math.random() * GRADS.length), pinned:false,
         desc:v.desc, skills:(v.skills || '').split(',').map(s => s.trim()).filter(Boolean)
       });
@@ -1164,7 +1222,7 @@ function editAgentForm(id){
     ],
     submit:'Save changes',
     onSave:v => {
-      a.name = v.name; a.icon = v.icon || '✦'; a.desc = v.desc;
+      a.name = v.name; a.icon = v.icon || 'sparkle'; a.desc = v.desc;
       a.skills = (v.skills || '').split(',').map(s => s.trim()).filter(Boolean);
       save(); render(); toast('Agent updated');
     }
@@ -1177,14 +1235,14 @@ function newTeamForm(){
     title:'New team',
     fields:[
       {name:'name', label:'Team name', ph:'e.g. Visa Launch Squad'},
-      {name:'icon', label:'Icon', ph:'🚀'},
+      {name:'icon', label:'Icon key', ph:'doc, plane, shield, mic'},
       {name:'desc', label:'What the team owns', type:'textarea'},
       {name:'lead', label:'Lead agent', type:'select', options:opts}
     ],
     submit:'Create team',
     onSave:v => {
       db.teams.push({
-        id:uid('t'), name:v.name, icon:v.icon || '👥',
+        id:uid('t'), name:v.name, icon:v.icon || 'users',
         g:Math.floor(Math.random() * GRADS.length),
         members:[v.lead].concat(db.agents.filter(a => a.id !== v.lead).slice(0,2).map(a => a.id)),
         desc:v.desc
@@ -1249,12 +1307,12 @@ function newArtifactForm(){
     title:'New artifact',
     fields:[
       {name:'name', label:'Title', ph:'Visa checklist'},
-      {name:'icon', label:'Icon', ph:'🗂️'},
+      {name:'icon', label:'Icon key', ph:'doc, layers, card'},
       {name:'body', label:'Content', type:'textarea'}
     ],
     submit:'Save artifact',
     onSave:v => {
-      db.artifacts.unshift({id:uid('ar'), icon:v.icon || '📄', name:v.name, meta:'Just now', body:v.body});
+      db.artifacts.unshift({id:uid('ar'), icon:v.icon || 'doc', name:v.name, meta:'Just now', body:v.body});
       save(); render(); toast('Artifact saved');
     }
   });
@@ -1263,7 +1321,7 @@ function newArtifactForm(){
 function openArtifact(id){
   const a = byId(db.artifacts, id);
   if(!a) return;
-  openModal('<h3>' + a.icon + ' ' + esc(a.name) + '</h3>' +
+  openModal('<h3>' + ic(a.icon) + esc(a.name) + '</h3>' +
     '<div class="card" style="padding:14px;white-space:pre-wrap;font-size:13.6px;line-height:1.65;background:var(--card)">' + esc(a.body) + '</div>' +
     '<div class="mf-row"><button class="btn soft" data-act="delArtifact" data-id="' + a.id + '">Delete</button>' +
     '<button class="btn" data-act="closeModal">Done</button></div>');
@@ -1298,13 +1356,13 @@ function openSettings(){
       '<button class="sw ' + (dark ? 'on' : '') + '" data-act="toggleDark"><i></i></button></div></div>' +
     '<div class="card" style="padding:14px;margin-bottom:12px"><div class="row">' +
       '<div class="grow"><b style="font-size:14px">Add to Home Screen</b><div class="mini" style="margin-top:3px">iOS Safari: Share, then Add to Home Screen</div></div>' +
-      '<span style="font-size:18px">📲</span></div></div>' +
+      '<span style="color:var(--violet)"><svg class="ic" style="width:22px;height:22px"><use href="#i-plus"></use></svg></span></div></div>' +
     aiSettingsCard() +
     '<div class="row" style="gap:8px;margin-bottom:10px">' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="exportJson">Export data</button>' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="resetAll">Reset app</button>' +
     '</div>' +
-    '<div class="mini" style="text-align:center;margin:10px 0 4px">Visa Agent · build v5 · Grok ready</div>' +
+    '<div class="mini" style="text-align:center;margin:10px 0 4px">Visa Agent · build v6 · premium icons · Grok ready</div>' +
     '<button class="btn block" data-act="closeModal">Close</button>');
 }
 
@@ -1414,7 +1472,7 @@ document.addEventListener('input', e => {
 function agentMenu(id){
   const a = byId(db.agents, id);
   if(!a) return;
-  openModal('<h3>' + a.icon + ' ' + esc(a.name) + '</h3>' +
+  openModal('<h3>' + ic(a.icon) + esc(a.name) + '</h3>' +
     '<div class="row" style="gap:8px;margin-bottom:12px">' +
       '<button class="btn" style="flex:1;justify-content:center" data-act="chatAgent" data-id="' + a.id + '">Chat</button>' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="agentInfo" data-id="' + a.id + '">Details</button>' +
@@ -1431,7 +1489,7 @@ function agentInfo(id){
   if(!a) return;
   const chats = db.chats.filter(c => c.kind === 'agent' && c.ref === id);
   const msgs = chats.reduce((n,c) => n + c.messages.length, 0);
-  openModal('<h3>' + a.icon + ' ' + esc(a.name) + '</h3>' +
+  openModal('<h3>' + ic(a.icon) + esc(a.name) + '</h3>' +
     '<div class="card" style="padding:14px;margin-bottom:12px">' +
       '<p style="margin:0 0 10px;font-size:13.6px;line-height:1.6">' + esc(a.desc) + '</p>' +
       '<div class="chips">' + a.skills.map(s => '<span class="chip">' + esc(s) + '</span>').join('') + '</div>' +
@@ -1447,7 +1505,7 @@ function agentInfo(id){
 function teamMenu(id){
   const t = byId(db.teams, id);
   if(!t) return;
-  openModal('<h3>' + t.icon + ' ' + esc(t.name) + '</h3>' +
+  openModal('<h3>' + ic(t.icon) + esc(t.name) + '</h3>' +
     '<p style="font-size:13.6px;line-height:1.6;color:var(--dim);margin:0 0 14px">' + esc(t.desc) + '</p>' +
     '<div class="row" style="gap:8px"><button class="btn" style="flex:1;justify-content:center" data-act="openTeam" data-id="' + t.id + '">Open chat</button>' +
     '<button class="btn soft danger" style="flex:1;justify-content:center" data-act="delTeam" data-id="' + t.id + '">Delete</button></div>');
@@ -1516,12 +1574,12 @@ document.addEventListener('click', e => {
 
 function adoptAgent(id){
   const pool = {
-    d1:{name:'SEO Writer', icon:'🔎', desc:'Rank focused articles, briefs and internal linking plans.', skills:['SEO','Briefs']},
-    d2:{name:'Brand Designer', icon:'🎯', desc:'Logo systems, palettes and brand guidelines.', skills:['Identity','Palette']},
-    d3:{name:'API Builder', icon:'🔌', desc:'REST endpoints, schemas and integration wiring.', skills:['API','Schema']},
-    d4:{name:'Sales Closer', icon:'💼', desc:'Objection handling, follow-up sequences and scripts.', skills:['Scripts','Follow-up']},
-    d5:{name:'Exam Coach', icon:'📘', desc:'Study plans, mock tests and weak spot drills.', skills:['IELTS','Plan']},
-    d6:{name:'Travel Planner', icon:'🧭', desc:'Routes, budgets and day by day itineraries.', skills:['Itinerary','Budget']}
+    d1:{name:'SEO Writer', icon:'search', desc:'Rank focused articles, briefs and internal linking plans.', skills:['SEO','Briefs']},
+    d2:{name:'Brand Designer', icon:'target', desc:'Logo systems, palettes and brand guidelines.', skills:['Identity','Palette']},
+    d3:{name:'API Builder', icon:'plug', desc:'REST endpoints, schemas and integration wiring.', skills:['API','Schema']},
+    d4:{name:'Sales Closer', icon:'briefcase', desc:'Objection handling, follow-up sequences and scripts.', skills:['Scripts','Follow-up']},
+    d5:{name:'Exam Coach', icon:'book', desc:'Study plans, mock tests and weak spot drills.', skills:['IELTS','Plan']},
+    d6:{name:'Travel Planner', icon:'compass', desc:'Routes, budgets and day by day itineraries.', skills:['Itinerary','Budget']}
   };
   const p = pool[id];
   if(!p) return;
@@ -1547,12 +1605,12 @@ function exportJson(){
 /* template agents referenced by tryAgent */
 function ensureTryAgent(id){
   const pool = {
-    'tmp_d1':{name:'SEO Writer', icon:'🔎', desc:'Rank focused articles and briefs.', skills:['SEO','Briefs']},
-    'tmp_d2':{name:'Brand Designer', icon:'🎯', desc:'Logo systems and palettes.', skills:['Identity','Palette']},
-    'tmp_d3':{name:'API Builder', icon:'🔌', desc:'REST endpoints and schemas.', skills:['API','Schema']},
-    'tmp_d4':{name:'Sales Closer', icon:'💼', desc:'Scripts and follow-up sequences.', skills:['Scripts']},
-    'tmp_d5':{name:'Exam Coach', icon:'📘', desc:'Study plans and mock tests.', skills:['IELTS']},
-    'tmp_d6':{name:'Travel Planner', icon:'🧭', desc:'Routes, budgets and itineraries.', skills:['Itinerary']}
+    'tmp_d1':{name:'SEO Writer', icon:'search', desc:'Rank focused articles and briefs.', skills:['SEO','Briefs']},
+    'tmp_d2':{name:'Brand Designer', icon:'target', desc:'Logo systems and palettes.', skills:['Identity','Palette']},
+    'tmp_d3':{name:'API Builder', icon:'plug', desc:'REST endpoints and schemas.', skills:['API','Schema']},
+    'tmp_d4':{name:'Sales Closer', icon:'briefcase', desc:'Scripts and follow-up sequences.', skills:['Scripts']},
+    'tmp_d5':{name:'Exam Coach', icon:'book', desc:'Study plans and mock tests.', skills:['IELTS']},
+    'tmp_d6':{name:'Travel Planner', icon:'compass', desc:'Routes, budgets and itineraries.', skills:['Itinerary']}
   };
   if(pool[id] && !byId(db.agents, id)){
     const p = pool[id];

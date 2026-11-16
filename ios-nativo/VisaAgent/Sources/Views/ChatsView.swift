@@ -75,7 +75,7 @@ struct ChatsView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
                     .fill(Theme.wash(Theme.tint(agent?.tint ?? 0)))
-                Text(agent?.icon ?? "🛂").font(.system(size: 20))
+                Image(systemName: agent?.icon ?? "person.text.rectangle.fill").font(.system(size: 20, weight: .semibold)).foregroundColor(Theme.violet)
             }
             .frame(width: 46, height: 46)
             .overlay(
@@ -149,7 +149,7 @@ struct ChatDetailView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .fill(Theme.wash(Theme.tint(agent?.tint ?? 0)))
-                Text(agent?.icon ?? "🛂").font(.system(size: 18))
+                Image(systemName: agent?.icon ?? "person.text.rectangle.fill").font(.system(size: 18, weight: .semibold)).foregroundColor(Theme.violet)
             }
             .frame(width: 42, height: 42)
 
