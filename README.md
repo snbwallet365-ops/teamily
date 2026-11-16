@@ -1,6 +1,7 @@
-# Teamily · AI agent team
+# Visa Agent · VisaMOTion 365
 
-A working AI-agent team app: chats, agents, teams, automations, discover, memory and artifacts.
+A working visa case workspace: chats, agents, teams, automations, discover, memory and artifacts.
+A native SwiftUI iOS version lives in `ios-nativo/`.
 Light "liquid glass" design first, dark mode one tap away, iOS-style top navigation bar across
 every section.
 

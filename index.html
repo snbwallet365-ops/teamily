@@ -6,11 +6,11 @@
 <meta name="theme-color" content="#eef2fb">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Teamily">
+<meta name="apple-mobile-web-app-title" content="Visa Agent">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Helvetica,Arial' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
-<title>Teamily · AI Agent Team</title>
+<title>Visa Agent · VisaMOTion 365</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -386,7 +386,7 @@
 
 <script>
 /* ================= data ================= */
-const KEY = 'teamily.v3';
+const KEY = 'visaagent.v1';
 const GRADS = [
   'linear-gradient(135deg,#7c5cff,#5b8bff)',
   'linear-gradient(135deg,#ff7ab8,#ff9d5c)',
@@ -400,92 +400,99 @@ const GRADS = [
 
 function seedData(){
   const agents = [
-    {id:'a9', name:'Grok', icon:'✦', role:'Grok assistant · default brain', g:2, pinned:true,
-      desc:'Powered by xAI Grok. Answers anything, plans work, and hands it to the right specialist.',
-      skills:['Grok','Chat','Planning']},
-    {id:'a1', name:'Content Creator', icon:'✍️', role:'Content strategist', g:0, pinned:true,
-      desc:'Multi-platform content strategy, captions, carousels and launch copy.',
-      skills:['Social','Captions','Launch copy']},
-    {id:'a2', name:'Image Prompt Engineer', icon:'📷', role:'Visual prompt designer', g:1, pinned:false,
-      desc:'Crafts detailed photography and art prompts with lighting and style control.',
-      skills:['Prompts','Lighting','Style']},
-    {id:'a3', name:'Visual Storyteller', icon:'🎞️', role:'Narrative designer', g:5, pinned:false,
-      desc:'Turns raw material into a three act story with strong visual beats.',
-      skills:['Storyboards','Narrative']},
-    {id:'a4', name:'Short-Video Editing Coach', icon:'▶️', role:'Post-production coach', g:4, pinned:false,
-      desc:'Hooks, pacing, cuts and retention tactics for short form video.',
-      skills:['Hooks','Pacing','Retention']},
-    {id:'a5', name:'Frontend Developer', icon:'🧑‍💻', role:'UI engineer', g:3, pinned:true,
-      desc:'Builds modern web interfaces, glass layouts and responsive components.',
-      skills:['HTML/CSS','React','Motion']},
-    {id:'a6', name:'Pitch Deck Builder', icon:'📊', role:'Fundraising designer', g:2, pinned:false,
-      desc:'Investor decks with narrative drive, traction charts and a clear ask.',
-      skills:['Decks','Traction','Story']},
-    {id:'a7', name:'Visa & Immigration Guide', icon:'🛂', role:'Visa specialist', g:6, pinned:true,
-      desc:'Visa routes, document checklists, appointments and interview preparation.',
-      skills:['Checklists','Embassy','Documents']},
-    {id:'a8', name:'Learning Designer', icon:'🎓', role:'Curriculum designer', g:7, pinned:false,
-      desc:'Course outlines, module sequencing and practice tasks that stick.',
-      skills:['Curriculum','Modules','Assessments']}
+    {id:'a9', name:'Grok · Visa Case Manager', icon:'\u2726', role:'Grok powered case manager', g:2, pinned:true,
+      desc:'Runs the whole file: reads documents, flags gaps, keeps the timeline and hands work to specialists.',
+      skills:['Grok','Case review','Timeline']},
+    {id:'a1', name:'Saudi & Gulf Visa Specialist', icon:'\ud83d\udd4b', role:'Gulf visa specialist', g:0, pinned:true,
+      desc:'Saudi, UAE, Qatar and Oman visit, Umrah and work visa files with embassy rules.',
+      skills:['Visit visa','Umrah','Work permit']},
+    {id:'a2', name:'Schengen Visa Specialist', icon:'\ud83c\uddea\ud83c\uddfa', role:'Schengen advisor', g:1, pinned:true,
+      desc:'Short stay files, insurance, itinerary and choosing the right consulate.',
+      skills:['Schengen','Insurance','Itinerary']},
+    {id:'a3', name:'UK & Ireland Advisor', icon:'\ud83c\uddec\ud83c\udde7', role:'UK visa advisor', g:3, pinned:false,
+      desc:'Visitor, student and spouse routes with the exact evidence officers look for.',
+      skills:['Visitor','Student','Spouse']},
+    {id:'a4', name:'Canada & US Advisor', icon:'\ud83c\udde8\ud83c\udde6', role:'North America advisor', g:4, pinned:false,
+      desc:'Visitor files, DS-160 support, invitation letters and interview preparation.',
+      skills:['DS-160','Invitation','Interview']},
+    {id:'a5', name:'Australia & NZ Advisor', icon:'\ud83c\udde6\ud83c\uddfa', role:'Oceania advisor', g:5, pinned:false,
+      desc:'Subclass 600 files, funds evidence, health insurance and real timelines.',
+      skills:['Subclass 600','Funds','Insurance']},
+    {id:'a6', name:'Document Checklist Agent', icon:'\ud83d\udccb', role:'Checklist builder', g:6, pinned:true,
+      desc:'Builds the exact document list per country and purpose, then audits what is missing.',
+      skills:['Checklists','Audit','Verification']},
+    {id:'a7', name:'Cover Letter Writer', icon:'\u270d\ufe0f', role:'Letter specialist', g:7, pinned:false,
+      desc:'One page cover letters for family, business and tourist files, plus affidavits.',
+      skills:['Cover letter','Affidavit']},
+    {id:'a8', name:'Appointment & Biometrics Agent', icon:'\ud83d\udcc5', role:'Slot tracker', g:0, pinned:false,
+      desc:'Embassy slots, VFS centres, biometrics and deadline tracking per applicant.',
+      skills:['Slots','VFS','Deadlines']},
+    {id:'a10', name:'Interview Coach', icon:'\ud83c\udfa4', role:'Mock interview coach', g:1, pinned:false,
+      desc:'Runs mock interviews and scores answers to the ten most common questions.',
+      skills:['Mock','Scoring','Confidence']},
+    {id:'a11', name:'Compliance Reviewer', icon:'\ud83d\udee1\ufe0f', role:'File reviewer', g:3, pinned:false,
+      desc:'Checks a finished file for missing pages, mismatches and refusal risk.',
+      skills:['Audit','Risk','Refusal']}
   ];
 
   const teams = [
-    {id:'t1', name:'Visa Launch Squad', icon:'🚀', g:0, members:['a7','a1','a5','a6'],
-      desc:'Runs the full visa service launch: checklist content, landing page, deck.'},
-    {id:'t2', name:'Content Engine', icon:'🎨', g:5, members:['a1','a3','a4'],
-      desc:'Weekly content: strategy, visuals and short video edits.'},
-    {id:'t3', name:'Product Studio', icon:'🧩', g:2, members:['a5','a2','a8'],
-      desc:'Ships product surfaces, image sets and course material.'}
+    {id:'t1', name:'Saudi Umrah Case Team', icon:'\ud83d\udd4b', g:0, members:['a1','a6','a8'],
+      desc:'Saudi specialist, checklist and appointment tracking for Umrah files.'},
+    {id:'t2', name:'Schengen Family Trip', icon:'\ud83c\uddea\ud83c\uddfa', g:1, members:['a2','a6','a10'],
+      desc:'Four applicants, one itinerary, one insurance policy.'},
+    {id:'t3', name:'Client Onboarding', icon:'\ud83e\udd1d', g:3, members:['a11','a7','a9'],
+      desc:'First contact to signed file, letters and compliance included.'}
   ];
 
   const automations = [
-    {id:'au1', name:'Daily visa task digest', when:'Every day · 09:00', agentId:'a7', on:true, last:'Today 09:00',
-      prompt:'List today open visa tasks and missing documents.'},
-    {id:'au2', name:'Weekly content calendar', when:'Every Monday · 08:00', agentId:'a1', on:true, last:'Mon 08:00',
-      prompt:'Draft next week content calendar with 5 posts.'},
-    {id:'au3', name:'New lead follow-up', when:'When a record is created', agentId:'a7', on:false, last:'Never',
-      prompt:'Send a follow-up message with the document checklist.'}
+    {id:'au1', name:'Morning visa digest', when:'Every day \u00b7 09:00', agentId:'a6', on:true, last:'Today 09:00',
+      prompt:'List new messages, deadlines and missing documents for every open file.'},
+    {id:'au2', name:'Appointment slot watch', when:'Every 2 hours', agentId:'a8', on:true, last:'2h ago',
+      prompt:'Check tracked embassies for newly opened appointment slots.'},
+    {id:'au3', name:'Weekly file audit', when:'Every Monday \u00b7 08:00', agentId:'a11', on:false, last:'Never',
+      prompt:'Review every open file for missing pages and refusal risk.'}
   ];
 
   const chats = [
     {id:'c0', kind:'agent', ref:'a9', unread:1, updated: Date.now()-1000*60*1, messages:[
-      {from:'them', text:'Grok is connected. Ask for anything: a plan, a draft, a fix, or a decision.', ts:Date.now()-1000*60*2},
-      {from:'me', text:'What can you do first?', ts:Date.now()-1000*60*1},
-      {from:'them', text:'Pick a section and I will run it: Chats for talk, Teams for group work, Automations for scheduled jobs, Artifacts for saved output.', ts:Date.now()-1000*60}
+      {from:'them', text:'Case file BD-2481 is 82 percent ready. Only the bank statement is older than 30 days.', ts:Date.now()-1000*60*4},
+      {from:'me', text:'What is the next action?', ts:Date.now()-1000*60*2},
+      {from:'them', text:'Ask the applicant for a stamped statement dated within 30 days. I will re-audit the file and book biometrics once it lands.', ts:Date.now()-1000*60*1}
     ]},
-    {id:'c1', kind:'agent', ref:'a7', unread:2, updated: Date.now()-1000*60*3, messages:[
-      {from:'them', text:'Saudi Arabia visit visa checklist is ready. Want the file?', ts:Date.now()-1000*60*9},
-      {from:'me', text:'Yes, send it.', ts:Date.now()-1000*60*6},
-      {from:'them', text:'Passport valid 6+ months, white background photos, return ticket, hotel booking, 3 to 6 months bank statements, and a short cover letter. I saved it to Artifacts.', ts:Date.now()-1000*60*3}
+    {id:'c1', kind:'agent', ref:'a1', unread:2, updated: Date.now()-1000*60*6, messages:[
+      {from:'them', text:'Saudi visit visa checklist for Mr Rahman is ready. Want the document list?', ts:Date.now()-1000*60*20},
+      {from:'me', text:'Yes, send it.', ts:Date.now()-1000*60*12},
+      {from:'them', text:'Passport valid 6+ months, white background photos 35x45mm, return ticket, hotel or host booking, bank statement under 30 days, NID copy and a short cover letter. Saved to Artifacts.', ts:Date.now()-1000*60*6}
     ]},
-    {id:'c2', kind:'agent', ref:'a5', unread:1, updated: Date.now()-1000*60*42, messages:[
-      {from:'them', text:'Light glass nav is pushed to the preview build. Shadow and press states are in.', ts:Date.now()-1000*60*44},
-      {from:'me', text:'Looks good. Keep the gradient buttons.', ts:Date.now()-1000*60*42}
+    {id:'c2', kind:'agent', ref:'a6', unread:1, updated: Date.now()-1000*60*50, messages:[
+      {from:'them', text:'Schengen family checklist is built: 34 items for 4 applicants, 2 missing per person.', ts:Date.now()-1000*60*50}
     ]},
-    {id:'c3', kind:'agent', ref:'a1', unread:0, updated: Date.now()-1000*60*60*20, messages:[
-      {from:'them', text:'Drafted 3 posts for launch week: teaser, proof story, requirement carousel.', ts:Date.now()-1000*60*60*20}
+    {id:'c3', kind:'agent', ref:'a7', unread:0, updated: Date.now()-1000*60*60*9, messages:[
+      {from:'me', text:'Draft the UK cover letter for a two week family visit.', ts:Date.now()-1000*60*60*10},
+      {from:'them', text:'Draft is in Artifacts. Purpose, dates, host details, funding and return intent on one page.', ts:Date.now()-1000*60*60*9}
     ]},
-    {id:'c4', kind:'Team', ref:'t1', unread:0, updated: Date.now()-1000*60*60*30, messages:[
-      {from:'them', text:'Visa Launch Squad: checklist copy done, landing page in review, deck at 9 slides.', ts:Date.now()-1000*60*60*30}
+    {id:'c4', kind:'Team', ref:'t1', unread:0, updated: Date.now()-1000*60*60*26, messages:[
+      {from:'them', text:'Saudi Umrah Case Team: checklist done, appointment tracked, compliance review pending.', ts:Date.now()-1000*60*60*26}
     ]}
   ];
 
   const memories = [
-    {id:'m1', k:'Business', v:'Runs visa and immigration services under the VisaMOTion 365 brand.'},
-    {id:'m2', k:'Preference', v:'Prefers replies in Bengali written in romanised Bangla.'},
-    {id:'m3', k:'Project', v:'Building Teamily, an AI agent team workspace with an iOS liquid glass UI.'},
-    {id:'m4', k:'Working style', v:'Wants work finished end to end with a shareable live link.'}
+    {id:'m1', k:'Applicant', v:'Md Rahman, passport BD1234567, expires 2029.'},
+    {id:'m2', k:'Destination', v:'Saudi Arabia, Umrah, 14 days in December.'},
+    {id:'m3', k:'Sponsor', v:'Brother in law in Jeddah, host letter on file.'},
+    {id:'m4', k:'House rule', v:'Bank statements must be under 30 days old.'},
+    {id:'m5', k:'Brand', v:'VisaMOTion 365 runs the visa and immigration service.'}
   ];
 
   const artifacts = [
-    {id:'ar1', icon:'🗂️', name:'Saudi visa checklist', meta:'Updated 3m ago',
-      body:'Passport valid 6+ months\nWhite background photos 4x6\nReturn ticket\nHotel booking\n3 to 6 months bank statements\nCover letter\n\nStatus: ready to send to client.'},
-    {id:'ar2', icon:'📈', name:'Launch metrics', meta:'Updated today',
-      body:'Visitors 1,284\nChecklist downloads 312\nConsultation bookings 46\nConversion 3.6%'},
-    {id:'ar3', icon:'🎬', name:'Storyboard v3', meta:'Updated Mon',
-      body:'Act 1: the visa maze\nAct 2: the guided path\nAct 3: arrival\n\nSix scenes, 42 seconds total.'},
-    {id:'ar4', icon:'🧾', name:'Pitch deck', meta:'9 slides',
-      body:'1 Cover\n2 Problem\n3 Solution\n4 Product\n5 Traction\n6 Market\n7 Model\n8 Competition\n9 Ask'}
+    {id:'ar1', icon:'\ud83d\udccb', name:'Saudi visa checklist', meta:'Updated 6m ago',
+      body:'Passport valid 6+ months\nWhite background photos 35x45mm\nReturn ticket\nHotel or host booking\nBank statement under 30 days\nNID copy\nCover letter\n\nStatus: ready to send.'},
+    {id:'ar2', icon:'\u270d\ufe0f', name:'UK visitor cover letter', meta:'One page',
+      body:'To the Entry Clearance Officer,\n\nI am travelling to the United Kingdom from 4 to 18 January to visit my sister in Manchester. She provides accommodation. I fund the trip from savings of GBP 6,400, statement attached. I run a trading business in Dhaka and return to my family on 19 January.\n\nYours faithfully,\nMd Rahman'},
+    {id:'ar3', icon:'\ud83d\udee1\ufe0f', name:'Schengen file audit', meta:'4 files',
+      body:'Files checked 4\nComplete 2\nMissing insurance 1\nStatement too old 1\n\nRecommendation: refresh statements before booking biometrics.'},
+    {id:'ar4', icon:'\ud83d\udcc5', name:'Biometrics plan', meta:'This week',
+      body:'Wednesday: VFS Dhaka, 10:20 slot, 4 applicants\nCarry: passport, appointment letter, photos, checklist copy\nArrive 15 minutes early, no electronics inside.'}
   ];
 
   return {agents, teams, automations, chats, memories, artifacts,
@@ -573,8 +580,8 @@ function aiReady(){
   return !!(a.key && a.key.replace(/\s/g,'').length > 15);
 }
 function aiSystem(agent){
-  const who = agent ? (agent.name + ' — ' + (agent.role || 'specialist') + '. ' + (agent.desc || '')) : 'the Teamily agent team';
-  return 'You are ' + who + ' inside Teamily, a premium AI agent team app. Reply in the user language. Be concrete and practical, max 120 words. Use short lines, no markdown headings.';
+  const who = agent ? (agent.name + ' — ' + (agent.role || 'specialist') + '. ' + (agent.desc || '')) : 'the Visa Agent team';
+  return 'You are ' + who + ' inside Visa Agent, a premium visa file workspace. Reply in the user language. Be concrete and practical, max 120 words. Use short lines, no markdown headings.';
 }
 async function aiReply(system, msgs){
   const a = aiCfg();
@@ -1297,7 +1304,7 @@ function openSettings(){
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="exportJson">Export data</button>' +
       '<button class="btn soft" style="flex:1;justify-content:center" data-act="resetAll">Reset app</button>' +
     '</div>' +
-    '<div class="mini" style="text-align:center;margin:10px 0 4px">Teamily · build v4 · Grok ready</div>' +
+    '<div class="mini" style="text-align:center;margin:10px 0 4px">Visa Agent · build v5 · Grok ready</div>' +
     '<button class="btn block" data-act="closeModal">Close</button>');
 }
 
