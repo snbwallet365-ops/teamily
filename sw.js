@@ -1,4 +1,4 @@
-const CACHE = 'teamily-shell-v3';
+const CACHE = 'visaagent-shell-v5';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
