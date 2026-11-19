@@ -227,6 +227,36 @@
   .segnav button.on .g{opacity:1}
   .segnav button.live::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px rgba(46,196,160,.9);margin-left:1px}
 
+  /* ---------- studio ---------- */
+  .stTabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+  .stTabs::-webkit-scrollbar{display:none}
+  .stTabs button{border:1px solid var(--line);background:var(--card-2);color:var(--dim);font:inherit;font-size:12.5px;font-weight:700;
+    padding:8px 14px;border-radius:13px;cursor:pointer;white-space:nowrap;transition:.16s}
+  .stTabs button.on{color:#fff;background:var(--grad);border-color:transparent;box-shadow:0 8px 18px rgba(94,110,255,.28)}
+  .stcard{padding:14px;margin-bottom:12px}
+  .stf{display:block;margin-bottom:9px}
+  .stf span{display:block;font-size:11.5px;font-weight:700;color:var(--dimmer);margin-bottom:5px;letter-spacing:.2px}
+  .stf input,.stf textarea{width:100%;border:1px solid var(--line);background:var(--card-2);color:var(--ink);font:inherit;font-size:13.5px;
+    padding:11px 12px;border-radius:13px;outline:none}
+  .stf input:focus,.stf textarea:focus{border-color:rgba(124,92,255,.55);box-shadow:0 0 0 4px rgba(124,92,255,.12)}
+  .stf textarea{resize:vertical;line-height:1.5}
+  .frameWrap{margin-top:12px;display:flex;justify-content:center;background:rgba(15,23,42,.05);border-radius:18px;padding:10px;overflow:hidden}
+  .pvFrame{width:100%;max-width:var(--fw,390px);height:520px;border:0;border-radius:14px;background:#fff;box-shadow:0 14px 30px rgba(23,37,84,.16)}
+  .flowRow{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:12px;background:var(--card-2);border:1px solid var(--line);margin-bottom:6px;font-size:12.8px}
+  .flowRow .dot{width:8px;height:8px;border-radius:50%;flex:0 0 8px}
+  .flowRow.ok .dot{background:var(--mint);box-shadow:0 0 8px rgba(46,196,160,.7)}
+  .flowRow.bad .dot{background:#e5484d;box-shadow:0 0 8px rgba(229,72,77,.6)}
+  .flowRow b{font-weight:700}
+  .chipwrap{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{border:1px solid var(--line);background:var(--card-2);color:var(--dim);font:inherit;font-size:12.3px;font-weight:700;
+    padding:8px 12px;border-radius:12px;cursor:pointer}
+  .chip.on{color:#fff;background:var(--grad);border-color:transparent}
+  .planOut{font-size:13.2px;line-height:1.6;color:var(--ink)}
+  .planOut p{margin:0 0 7px}
+  .planOut .planH{display:block;margin:10px 0 5px;font-size:13.6px;color:var(--violet)}
+  .planOut ul{margin:0 0 8px;padding-left:18px}
+  .planOut li{margin-bottom:3px}
+
   /* ---------- dock ---------- */
   .dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;
     width:min(452px,calc(100% - 32px));display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-radius:26px;
@@ -360,6 +390,7 @@
 <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.2v13.6M5.2 12h13.6"/></symbol>
 <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3.6L10.4 14.2"/><path d="M21 3.6l-6.9 17.6-3.7-6.8-6.8-3.7L21 3.6z"/></symbol>
+<symbol id="i-beaker" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.2L5.4 17A2.6 2.6 0 0 0 7.7 21h8.6a2.6 2.6 0 0 0 2.3-4L14 9.2V3"/><path d="M7.5 15h9"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.6l4.6 4.6L19 6.8"/></symbol>
 <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M3 10.2h18"/><path d="M6.6 14.6h3.2"/></symbol>
@@ -394,6 +425,7 @@
       <button data-act="nav" data-view="discover"><span class="g"><svg class="ic"><use href="#i-compass"></use></svg></span>Discover</button>
       <button data-act="nav" data-view="memory"><span class="g"><svg class="ic"><use href="#i-brain"></use></svg></span>Memory</button>
       <button data-act="nav" data-view="artifacts"><span class="g"><svg class="ic"><use href="#i-layers"></use></svg></span>Artifacts</button>
+      <button data-act="nav" data-view="studio"><span class="g"><svg class="ic"><use href="#i-beaker"></use></svg></span>Studio</button>
     </div>
   </div>
 
@@ -706,7 +738,8 @@ const TITLES = {
   automations:{t:'Automations', s:'Running on your behalf'},
   discover:{t:'Discover', s:'Add new specialists'},
   memory:{t:'Memory', s:'What your team knows'},
-  artifacts:{t:'Artifacts', s:'Saved outputs'}
+  artifacts:{t:'Artifacts', s:'Saved outputs'},
+  studio:{t:'Studio', s:'Preview, deploy and plan'}
 };
 
 function applyTheme(){
@@ -933,7 +966,7 @@ function renderArtifacts(){
       : '<div class="empty">Nothing saved yet. Artifacts appear here when an agent finishes work.</div>');
 }
 
-const RENDERERS = {chats:renderChats, agents:renderAgents, teams:renderTeams, automations:renderAutomations, discover:renderDiscover, memory:renderMemory, artifacts:renderArtifacts};
+const RENDERERS = {chats:renderChats, agents:renderAgents, teams:renderTeams, automations:renderAutomations, discover:renderDiscover, memory:renderMemory, artifacts:renderArtifacts, studio:renderStudio};
 
 function render(){
   applyTheme();
@@ -1367,6 +1400,356 @@ function openSettings(){
 }
 
 /* ================= events ================= */
+/* ================= Studio ================= */
+function studio(){
+  if(!db.studio) db.studio = {ghToken:'', ghRepo:'', ghBranch:'main', vToken:'', vProject:'', previewUrl:'', runs:[], plan:''};
+  if(!db.studio.runs) db.studio.runs = [];
+  if(!db.ui.stab) db.ui.stab = 'preview';
+  return db.studio;
+}
+function stuTab(t){ db.ui.stab = t; save(); render(); }
+function stuMsg(id, text, bad){
+  const el = document.getElementById(id);
+  if(el){ el.innerHTML = '<span style="color:' + (bad ? 'var(--danger,#e5484d)' : 'var(--mint)') + '">' + esc(text) + '</span>'; }
+  toast(text);
+}
+function base64utf8(str){
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  bytes.forEach(b => { bin += String.fromCharCode(b); });
+  return btoa(bin);
+}
+function field(id, label, value, ph, type){
+  return '<label class="stf"><span>' + label + '</span><input id="' + id + '" type="' + (type || 'text') + '" value="' + esc(value || '') + '" placeholder="' + esc(ph || '') + '" autocomplete="off" spellcheck="false"></label>';
+}
+function studioPreview(){
+  const st = studio();
+  const url = st.previewUrl || (location.protocol === 'file:' ? '' : location.origin + location.pathname);
+  return '<div class="card stcard">' +
+    '<div class="row" style="margin-bottom:10px"><span class="sec" style="margin:0;flex:1">Preview</span>' +
+      '<button class="btn sm soft" data-act="devSize" data-id="390">Phone</button>' +
+      '<button class="btn sm soft" data-act="devSize" data-id="820">Desktop</button></div>' +
+    field('pvUrl', 'Project URL', url, 'https://your-project.vercel.app') +
+    '<button class="btn block" data-act="pvLoad" style="margin-top:10px">Load preview</button>' +
+    (url ? '<div class="frameWrap" style="--fw:' + (st.devW || 390) + 'px"><iframe class="pvFrame" src="' + esc(url) + '" loading="lazy" referrerpolicy="no-referrer"></iframe></div>' : '<div class="empty">Ei app file:// theke cholche, tai preview URL dao.</div>') +
+  '</div>' +
+  '<div class="card stcard"><div class="row" style="margin-bottom:8px"><span class="sec" style="margin:0;flex:1">Flow tests</span>' +
+    '<button class="btn sm" data-act="runFlows">Run flows</button></div>' +
+    '<div class="mini" style="margin-bottom:8px">Navigates every section, opens a chat, sends a message, waits for the reply, toggles an automation and the theme. Each step is timed.</div>' +
+    '<div id="flowResults">' + flowResults() + '</div></div>';
+}
+function flowResults(){
+  const st = studio();
+  if(!st.runs.length) return '<div class="empty">No runs yet. Press Run flows.</div>';
+  return st.runs.slice(0, 14).map(r => '<div class="flowRow ' + (r.ok ? 'ok' : 'bad') + '">' +
+    '<span class="dot"></span><b>' + esc(r.name) + '</b>' +
+    '<span class="mini" style="margin-left:auto">' + (r.ms || 0) + ' ms</span></div>').join('') +
+    '<div class="mini" style="margin-top:8px">' + st.runs.filter(r => r.ok).length + ' passed / ' + st.runs.filter(r => !r.ok).length + ' failed</div>';
+}
+function studioGithub(){
+  const st = studio();
+  const repos = st.ghList || [];
+  return '<div class="card stcard"><span class="sec">GitHub account</span>' +
+    '<div class="mini" style="margin:4px 0 10px">Personal access token with repo scope. Stored only on this device, sent only to api.github.com.</div>' +
+    field('ghToken', 'Token', st.ghToken, 'ghp_...', 'password') +
+    '<button class="btn block" data-act="ghConnect" style="margin-top:10px">Connect GitHub</button>' +
+    '<div id="ghMsg" class="mini" style="margin-top:8px">' + (st.ghUser ? 'Connected as ' + esc(st.ghUser) : 'Not connected') + '</div>' +
+  '</div>' +
+  (repos.length ? '<div class="card stcard"><span class="sec">Repositories</span><div class="chipwrap" style="margin-top:8px">' +
+    repos.map(r => '<button class="chip' + (st.ghRepo === r.full_name ? ' on' : '') + '" data-act="ghPickRepo" data-id="' + esc(r.full_name) + '">' + esc(r.name) + '</button>').join('') +
+  '</div></div>' : '') +
+  '<div class="card stcard"><span class="sec">Repository sync</span>' +
+    field('ghRepo', 'Repository', st.ghRepo, 'owner/repo') +
+    field('ghBranch', 'Branch', st.ghBranch || 'main', 'main') +
+    '<div class="row" style="gap:8px;margin-top:10px">' +
+      '<button class="btn sm" style="flex:1;justify-content:center" data-act="ghPush">Push app file</button>' +
+      '<button class="btn sm soft" style="flex:1;justify-content:center" data-act="ghStatus">Status</button></div>' +
+    '<div id="ghSync" class="mini" style="margin-top:8px">Push sends the deployed index.html to the repo with a commit message.</div>' +
+  '</div>';
+}
+function studioVercel(){
+  const st = studio();
+  const projs = st.vList || [];
+  return '<div class="card stcard"><span class="sec">Vercel connection</span>' +
+    '<div class="mini" style="margin:4px 0 10px">Create a token at vercel.com/account/tokens. Stored only on this device, sent only to api.vercel.com.</div>' +
+    field('vToken', 'Token', st.vToken, 'vercel token', 'password') +
+    '<button class="btn block" data-act="vConnect" style="margin-top:10px">Connect Vercel</button>' +
+    '<div id="vMsg" class="mini" style="margin-top:8px">' + (st.vUser ? 'Connected as ' + esc(st.vUser) : 'Not connected') + '</div>' +
+  '</div>' +
+  (projs.length ? '<div class="card stcard"><span class="sec">Projects</span><div class="chipwrap" style="margin-top:8px">' +
+    projs.map(p => '<button class="chip' + (st.vProject === p.id ? ' on' : '') + '" data-act="vPickProject" data-id="' + esc(p.id) + '" data-name="' + esc(p.name) + '">' + esc(p.name) + '</button>').join('') +
+  '</div></div>' : '') +
+  '<div class="card stcard"><span class="sec">Deploy</span>' +
+    '<div id="vDeploy" class="mini" style="margin:6px 0 10px">' + (st.vProject ? 'Selected: ' + esc(st.vProjectName || st.vProject) : 'Pick a project first') + '</div>' +
+    '<div class="row" style="gap:8px">' +
+      '<button class="btn sm" style="flex:1;justify-content:center" data-act="vRedeploy">Redeploy latest</button>' +
+      '<button class="btn sm soft" style="flex:1;justify-content:center" data-act="vLatest">Latest status</button></div>' +
+    '<div id="vMsg2" class="mini" style="margin-top:8px"></div>' +
+  '</div>';
+}
+
+function studioPlan(){
+  const st = studio();
+  return '<div class="card stcard"><span class="sec">AI build plan</span>' +
+    '<div class="mini" style="margin:4px 0 10px">Describe the project. The planner returns a prioritized plan with setup guidance. Uses your AI key from Settings, or Vercel AI Gateway if that provider is selected.</div>' +
+    '<textarea id="planIn" class="stf" rows="4" placeholder="Visa agency workspace with agent chat, document checklist, appointment reminders and client portal">' + esc(st.planInput || '') + '</textarea>' +
+    '<button class="btn block" data-act="genPlan" style="margin-top:10px">Generate plan</button>' +
+    '<div id="planMsg" class="mini" style="margin-top:8px"></div>' +
+  '</div>' +
+  (st.plan ? '<div class="card stcard"><div class="row" style="margin-bottom:8px"><span class="sec" style="margin:0;flex:1">Plan</span>' +
+      '<button class="btn sm soft" data-act="savePlan">Save to Artifacts</button></div>' +
+      '<div class="planOut">' + mdToHtml(st.plan) + '</div></div>' : '');
+}
+function mdToHtml(md){
+  const lines = String(md).split('\n');
+  let out = '', list = false;
+  lines.forEach(raw => {
+    let l = raw.replace(/</g, '&lt;');
+    l = l.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    const li = l.match(/^\s*[-*]\s+(.*)$/);
+    if(li){
+      if(!list){ out += '<ul>'; list = true; }
+      out += '<li>' + li[1] + '</li>';
+      return;
+    }
+    if(list){ out += '</ul>'; list = false; }
+    if(/^#{1,4}\s/.test(l)){ out += '<b class="planH">' + l.replace(/^#{1,4}\s/, '') + '</b>'; return; }
+    if(l.trim()) out += '<p>' + l + '</p>';
+  });
+  if(list) out += '</ul>';
+  return out;
+}
+function renderStudio(){
+  const tab = db.ui.stab || 'preview';
+  const tabs = [['preview', 'Preview'], ['github', 'GitHub'], ['vercel', 'Vercel'], ['plan', 'Build plan']];
+  const bar = '<div class="stTabs">' + tabs.map(t => '<button class="' + (tab === t[0] ? 'on' : '') + '" data-act="stab" data-id="' + t[0] + '">' + t[1] + '</button>').join('') + '</div>';
+  let body = '';
+  if(tab === 'github') body = studioGithub();
+  else if(tab === 'vercel') body = studioVercel();
+  else if(tab === 'plan') body = studioPlan();
+  else body = studioPreview();
+  return bar + body;
+}
+
+/* ---------- GitHub ---------- */
+async function ghApi(path, opts){
+  const st = studio();
+  const o = Object.assign({}, opts || {});
+  o.headers = Object.assign({'Accept': 'application/vnd.github+json'}, o.headers || {}, st.ghToken ? {'Authorization': 'Bearer ' + st.ghToken} : {});
+  const res = await fetch('https://api.github.com' + path, o);
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch(e) { data = {raw: text}; }
+  if(!res.ok) throw new Error((data && data.message) || ('HTTP ' + res.status));
+  return data;
+}
+async function ghConnect(){
+  const st = studio();
+  st.ghToken = (document.getElementById('ghToken') || {}).value || st.ghToken;
+  if(!st.ghToken){ toast('Token dao'); return; }
+  save();
+  try{
+    const me = await ghApi('/user');
+    st.ghUser = me.login;
+    const list = await ghApi('/user/repos?per_page=60&sort=updated');
+    st.ghList = list.map(r => ({full_name: r.full_name, name: r.name}));
+    save(); render();
+    toast('GitHub connected: ' + me.login);
+  }catch(e){
+    const m = document.getElementById('ghMsg');
+    if(m) m.innerHTML = '<span style="color:var(--danger,#e5484d)">' + esc(e.message) + '</span>';
+    toast('GitHub: ' + e.message);
+  }
+}
+async function ghPush(){
+  const st = studio();
+  const repo = (document.getElementById('ghRepo') || {}).value || st.ghRepo;
+  const branch = (document.getElementById('ghBranch') || {}).value || st.ghBranch || 'main';
+  if(!repo){ toast('Repository dao'); return; }
+  st.ghRepo = repo; st.ghBranch = branch; save();
+  const box = document.getElementById('ghSync');
+  if(box) box.textContent = 'Reading deployed file...';
+  try{
+    const src = await (await fetch(location.href, {cache: 'no-store'})).text();
+    if(!src || src.length < 500) throw new Error('Could not read the app file from this URL');
+    let sha = null;
+    try{ const cur = await ghApi('/repos/' + repo + '/contents/index.html?ref=' + encodeURIComponent(branch)); sha = cur.sha; }catch(e){ sha = null; }
+    const body = {message: 'Sync from Studio ' + new Date().toISOString().slice(0, 16), content: base64utf8(src), branch: branch};
+    if(sha) body.sha = sha;
+    const put = await ghApi('/repos/' + repo + '/contents/index.html', {method: 'PUT', body: JSON.stringify(body)});
+    if(box) box.innerHTML = '<span style="color:var(--mint)">Pushed ' + (put.commit ? put.commit.sha.slice(0, 7) : 'ok') + ' to ' + esc(repo) + '</span>';
+    toast('Pushed to ' + repo);
+  }catch(e){
+    if(box) box.innerHTML = '<span style="color:var(--danger,#e5484d)">' + esc(e.message) + '</span>';
+    toast('Push failed: ' + e.message);
+  }
+}
+async function ghStatus(){
+  const st = studio();
+  const repo = (document.getElementById('ghRepo') || {}).value || st.ghRepo;
+  if(!repo){ toast('Repository dao'); return; }
+  const box = document.getElementById('ghSync');
+  try{
+    const c = await ghApi('/repos/' + repo + '/commits?per_page=1');
+    const top = c && c[0];
+    if(box) box.innerHTML = top ? 'Last commit: <b>' + esc(top.commit.message.split('\n')[0]) + '</b> · ' + esc(top.commit.author.date) : 'No commits';
+  }catch(e){ if(box) box.innerHTML = '<span style="color:var(--danger,#e5484d)">' + esc(e.message) + '</span>'; }
+}
+
+/* ---------- Vercel ---------- */
+async function vApi(path, opts){
+  const st = studio();
+  const o = Object.assign({}, opts || {});
+  o.headers = Object.assign({}, o.headers || {}, st.vToken ? {'Authorization': 'Bearer ' + st.vToken} : {});
+  const res = await fetch('https://api.vercel.com' + path, o);
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch(e) { data = {raw: text}; }
+  if(!res.ok) throw new Error((data && (data.error && data.error.message || data.message)) || ('HTTP ' + res.status));
+  return data;
+}
+async function vConnect(){
+  const st = studio();
+  st.vToken = (document.getElementById('vToken') || {}).value || st.vToken;
+  if(!st.vToken){ toast('Token dao'); return; }
+  save();
+  try{
+    const me = await vApi('/v2/user');
+    st.vUser = (me.user && (me.user.username || me.user.email)) || 'account';
+    const p = await vApi('/v9/projects?limit=60');
+    st.vList = (p.projects || []).map(x => ({id: x.id, name: x.name}));
+    save(); render();
+    toast('Vercel connected');
+  }catch(e){
+    const m = document.getElementById('vMsg');
+    if(m) m.innerHTML = '<span style="color:var(--danger,#e5484d)">' + esc(e.message) + '</span>';
+    toast('Vercel: ' + e.message);
+  }
+}
+async function vRedeploy(){
+  const st = studio();
+  if(!st.vProject){ toast('Project pick koro'); return; }
+  const box = document.getElementById('vMsg2');
+  try{
+    if(box) box.textContent = 'Finding latest deployment...';
+    const d = await vApi('/v6/deployments?projectId=' + encodeURIComponent(st.vProject) + '&limit=1');
+    const latest = d.deployments && d.deployments[0];
+    if(!latest) throw new Error('No deployments for this project');
+    const r = await vApi('/v13/deployments/' + latest.uid + '/redeploy', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({target: 'production'})});
+    if(box) box.innerHTML = '<span style="color:var(--mint)">Redeploy started · ' + esc((r.id || r.uid || '').slice(0, 12)) + '</span>';
+    toast('Redeploy started');
+  }catch(e){ if(box) box.innerHTML = '<span style="color:var(--danger,#e5484d)">' + esc(e.message) + '</span>'; toast('Vercel: ' + e.message); }
+}
+async function vLatest(){
+  const st = studio();
+  if(!st.vProject){ toast('Project pick koro'); return; }
+  const box = document.getElementById('vMsg2');
+  try{
+    const d = await vApi('/v6/deployments?projectId=' + encodeURIComponent(st.vProject) + '&limit=1');
+    const l = d.deployments && d.deployments[0];
+    if(box) box.innerHTML = l ? 'State: <b>' + esc(l.state || l.readyState || '?') + '</b> · ' + esc(l.url || '') : 'No deployments';
+  }catch(e){ if(box) box.innerHTML = '<span style="color:var(--danger,#e5484d)">' + esc(e.message) + '</span>'; }
+}
+
+/* ---------- flow runner ---------- */
+async function runFlows(){
+  const st = studio();
+  st.runs = [];
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const add = (name, ok, ms) => st.runs.push({name: name, ok: !!ok, ms: ms, at: Date.now()});
+  const views = ['chats', 'agents', 'teams', 'automations', 'discover', 'memory', 'artifacts'];
+  for(const v of views){
+    const t = performance.now();
+    go(v); await wait(120);
+    const n = (document.getElementById('screen').innerText || '').trim().length;
+    add('Section ' + v, n > 30, Math.round(performance.now() - t));
+  }
+  go('chats'); await wait(160);
+  let t = performance.now();
+  const row = document.querySelector('.chatrow');
+  if(row) row.click();
+  await wait(280);
+  const sheet = document.getElementById('chatSheet');
+  add('Open a conversation', !!row && sheet.classList.contains('open'), Math.round(performance.now() - t));
+
+  t = performance.now();
+  const before = document.querySelectorAll('#msgs .msg').length;
+  const inp = document.getElementById('msgInput');
+  const sendBtn = document.querySelector('.composer .send');
+  let sent = false;
+  if(inp && sendBtn){
+    inp.value = 'Studio test: status report';
+    sendBtn.click();
+    sent = true;
+  }
+  await wait(2600);
+  const after = document.querySelectorAll('#msgs .msg').length;
+  add('Send message and get a reply', sent && after >= before + 2, Math.round(performance.now() - t));
+
+  const closeBtn = document.querySelector('[data-act="closeChat"]');
+  if(closeBtn) closeBtn.click();
+  await wait(200);
+  add('Close conversation', !sheet.classList.contains('open'), 120);
+
+  go('automations'); await wait(180);
+  t = performance.now();
+  const sw = document.querySelector('[data-act="toggleAuto"]');
+  const wasOn = sw ? sw.classList.contains('on') : false;
+  if(sw) sw.click();
+  await wait(220);
+  const nowSw = document.querySelector('[data-act="toggleAuto"]');
+  const changed = nowSw ? nowSw.classList.contains('on') !== wasOn : false;
+  if(nowSw) nowSw.click();
+  add('Toggle an automation', changed, Math.round(performance.now() - t));
+
+  t = performance.now();
+  const beforeTheme = document.documentElement.getAttribute('data-theme');
+  document.getElementById('themeBtn').click();
+  await wait(220);
+  const afterTheme = document.documentElement.getAttribute('data-theme');
+  document.getElementById('themeBtn').click();
+  add('Theme switch works', beforeTheme !== afterTheme, Math.round(performance.now() - t));
+
+  st.lastRun = Date.now();
+  save();
+  go('studio');
+  await wait(80);
+  toast(st.runs.filter(r => r.ok).length + '/' + st.runs.length + ' flows passed');
+}
+
+/* ---------- build plan ---------- */
+async function genPlan(){
+  const st = studio();
+  const box = document.getElementById('planIn');
+  const input = box ? box.value.trim() : '';
+  if(!input){ toast('Project description dao'); return; }
+  st.planInput = input;
+  const msg = document.getElementById('planMsg');
+  if(msg) msg.textContent = 'Thinking...';
+  const system = 'You are a senior product planner. Return a short prioritized build plan: 4 phases, each with a goal and 2 to 3 concrete setup steps. End with a risks line. Use short lines, no markdown tables.';
+  let plan = null;
+  try{
+    if(typeof aiReady === 'function' && aiReady()){
+      plan = await aiReply(system, [{from: 'me', text: input}]);
+    }
+  }catch(e){ plan = null; }
+  if(!plan){
+    plan = '## Phase 1 · Foundation\n- Set up the app shell, navigation and theme\n- Add local storage for cases and clients\n\n## Phase 2 · Core flow\n- Agent chat with document checklist\n- Save every message and artifact\n\n## Phase 3 · Automation\n- Appointment reminders and status emails\n- Daily digest automation\n\n## Phase 4 · Launch\n- Add the AI key in Settings\n- Deploy to Vercel, then push the repo\n\n## Risks\n- Provider keys must stay on device\n- Visa rules change, keep the checklist editable';
+  }
+  st.plan = plan;
+  save(); render();
+  const m2 = document.getElementById('planMsg');
+  if(m2) m2.innerHTML = '<span style="color:var(--mint)">Plan ready</span>';
+}
+function savePlan(){
+  const st = studio();
+  if(!st.plan){ toast('Plan nai'); return; }
+  db.artifacts.unshift({id: 'art' + Date.now(), icon: 'doc', title: 'Build plan · ' + (st.planInput || 'project').slice(0, 40), body: st.plan, at: Date.now()});
+  save();
+  toast('Saved to Artifacts');
+}
+
+
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if(!el) return;
@@ -1425,6 +1808,29 @@ document.addEventListener('click', e => {
       break;
     }
     case 'runAuto': runAuto(id); break;
+    case 'stab': stuTab(id); break;
+    case 'devSize': studio().devW = Number(id) || 390; save(); render(); break;
+    case 'pvLoad': {
+      const v = (document.getElementById('pvUrl') || {}).value || '';
+      if(!v){ toast('URL dao'); return; }
+      studio().previewUrl = v; save(); render();
+      break;
+    }
+    case 'runFlows': runFlows(); break;
+    case 'ghConnect': ghConnect(); break;
+    case 'ghPickRepo': studio().ghRepo = id; save(); render(); break;
+    case 'ghPush': ghPush(); break;
+    case 'ghStatus': ghStatus(); break;
+    case 'vConnect': vConnect(); break;
+    case 'vPickProject': {
+      const st2 = studio();
+      st2.vProject = id; st2.vProjectName = el.dataset.name || id; save(); render();
+      break;
+    }
+    case 'vRedeploy': vRedeploy(); break;
+    case 'vLatest': vLatest(); break;
+    case 'genPlan': genPlan(); break;
+    case 'savePlan': savePlan(); break;
     case 'cat': db.ui.cat = el.dataset.cat; save(); render(); break;
     case 'adopt': adoptAgent(id); break;
     case 'tryAgent': chatWithAgent('tmp_' + id); break;

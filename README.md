@@ -55,3 +55,17 @@ Details and the review checklist: [ios/README.md](ios/README.md)
 - `manifest.webmanifest`, `sw.js`, `icons/` - PWA install + offline shell
 - `capacitor.config.json`, `package.json` - native iOS wrapper
 - `assets/` - 1024 icon and launch image for the iOS asset generator
+
+## Studio (in-app)
+
+A fourth area inside the app, at the Studio tab.
+
+| Panel | What it does |
+| --- | --- |
+| Preview | Loads any project URL in a phone or desktop frame |
+| Flow tests | Runs 12 real UI flows (every section, chat send and reply, automation toggle, theme) and reports pass or fail with timings |
+| GitHub | Personal access token, repo list, push the deployed `index.html` with a commit message, last commit status |
+| Vercel | Token, project list, redeploy the latest deployment, read deployment state |
+| Build plan | Describe a project, get a prioritized 4 phase plan with setup steps, save it to Artifacts |
+
+Tokens are stored in the browser only and sent only to `api.github.com` and `api.vercel.com`.
